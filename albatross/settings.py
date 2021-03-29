@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '5a0r_e@%=430()3f=kobz#k9&p3855b@%@s*4br1_cv%n^u*=5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 #小程序配置
 APPID = "wxc68dfcdcdddfb429"
@@ -31,6 +31,7 @@ SECRET = "6efdfcc1ecb0d20cc4d7ca3f46418197"
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
+    '116.62.22.83',
     'albatross.herowharf.cn',
     '116.62.198.230',
     'localhost'
