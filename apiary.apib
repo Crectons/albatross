@@ -1,0 +1,107 @@
+FORMAT: 1A
+HOST: https://albatross.herowharf.cn/
+
+# 信天翁后端API文档
+
+信天翁项目组前后端交互约定
+
+## 测试 [/test]
+
+### 测试服务器工作状态 [GET]
+    正常即返回200
+    
++ Response 200 (application/json)
+        
+        []
+
+
+## 登录 [/login]
+
+### 登录 [POST]
+    携带小程序相关参数完成登录
+
++ Request (application/json)
+        
+        {
+            "ev": "encrypted_data",
+            "iv": "initialization vector",
+            "code": "code"
+        }
+
++ Response 200 (application/json)
+        
+        []
+        
+        
+## Questions Collection [/questions]
+### List All Questions [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+### Create a New Question [POST]
+
+You may create your own question using this action. It takes a JSON
+object containing a question and a collection of answers in the
+form of choices.
+
++ Request (application/json)
+
+        {
+            "question": "Favourite programming language?",
+            "choices": [
+                "Swift",
+                "Python",
+                "Objective-C",
+                "Ruby"
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }

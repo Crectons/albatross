@@ -1,0 +1,7 @@
+/*.sqlite3
+
+/logs/*.log
+
+dataSources.local.xml
+
+db.sqlite3
