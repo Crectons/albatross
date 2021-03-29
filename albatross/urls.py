@@ -23,6 +23,7 @@ from apiblueprint_view.views import ApiBlueprintView
 
 urlpatterns = [
     url(r'^docs/$', ApiBlueprintView.as_view(blueprint=r'~/albatross/apiary.apib')),
+    path('', csrf_exempt(server_views.test)),
     path('test/', csrf_exempt(server_views.test)),
     path('admin/', admin.site.urls),
     path('photo/', csrf_exempt(server_views.photo)),
