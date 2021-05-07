@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
     '116.62.22.83',
     'albatross.herowharf.cn',
     '116.62.198.230',
+    '172.19.6.135',
     'localhost'
 ]
 

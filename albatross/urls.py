@@ -22,7 +22,7 @@ from oauth import views as oauth_views
 from apiblueprint_view.views import ApiBlueprintView
 
 urlpatterns = [
-    url(r'^docs/$', ApiBlueprintView.as_view(blueprint=r'~/albatross/apiary.apib')),
+    url(r'^docs/$', ApiBlueprintView.as_view(blueprint=r'apiary.apib')),
     path('', csrf_exempt(server_views.test)),
     path('test/', csrf_exempt(server_views.test)),
     path('admin/', admin.site.urls),
