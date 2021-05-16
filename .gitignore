@@ -5,3 +5,8 @@
 dataSources.local.xml
 
 db.sqlite3
+<<<<<<< HEAD
+=======
+
+/node_modules
+>>>>>>> fb2490b0a8efd6dd126baeec2a5823c5606ba9ca
