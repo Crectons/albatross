@@ -36,5 +36,5 @@ def oauth(request):
         return response
     logger.info(u'Got openid successfully')
 
-    return HttpResponse(200)
+    return JsonResponse({'uid': account.uid})
     #return JsonResponse({'token': token, 'refresh_token': refresh_token, })

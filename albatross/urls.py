@@ -27,5 +27,9 @@ urlpatterns = [
     path('test/', csrf_exempt(server_views.test)),
     path('admin/', admin.site.urls),
     path('photo/', csrf_exempt(server_views.photo)),
-    path('login/',csrf_exempt(oauth_views.oauth)),
+    path('login/', csrf_exempt(oauth_views.oauth)),
+    path('user/', csrf_exempt(server_views.userInfoRelated)),
+    path('post/tree/', csrf_exempt(server_views.getPostTree)),
+    path('post/all/', csrf_exempt(server_views.getAllPost)),
+
 ]
