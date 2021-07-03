@@ -31,8 +31,8 @@ class UserInfo(models.Model):  # 用户信息
 
 class Post(models.Model): # 岗位信息
 
-    #pid = models.AutoField(primary_key=True)
-    cid = models.IntegerField(default='')
+    pid = models.AutoField(primary_key=True)
+    #cid = models.IntegerField(default='')
     node_1 = models.TextField(default='')  # 一级岗位
     node_2 = models.TextField(default='')  # 二级岗位
     node_3 = models.TextField(default='')  # 三级岗位

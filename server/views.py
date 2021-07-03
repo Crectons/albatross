@@ -53,18 +53,24 @@ def userInfoRelated(request):
 def getPostTree(request):
     if request.method == "GET":
         res = {}
+        ban_list_2 = ['产品规划','产品研发','电商产品设计']
+        ban_list_3 = ['产品']
         info = PostTree.objects.all()
         for item in info:
             if item.name_father == '根':
                 res[item.name_son] = {}
                 for sub_item in info:
                     if sub_item.name_father == item.name_son:
-                        if res[item.name_son][sub_item.name_son] == None:
+                        if sub_item.name_son in ban_list_2:
+                            continue
+                        if not res[item.name_son].__contains__(sub_item.name_son):
                             res[item.name_son][sub_item.name_son] = []
-                    for sub_sub_item in info:
-                        if sub_sub_item.name_father == sub_item.name_son:
-                            res[item.name_son][sub_item.name_son].append(sub_sub_item.name_son)
-
+                        for sub_sub_item in info:
+                            if sub_sub_item.name_father == sub_item.name_son:
+                                if sub_sub_item.name_son in ban_list_3:
+                                    continue
+                                if sub_sub_item.name_son not in res[item.name_son][sub_item.name_son]:
+                                    res[item.name_son][sub_item.name_son].append(sub_sub_item.name_son)
         return JsonResponse(res)
 
 
