@@ -31,36 +31,86 @@ HOST: https://albatross.herowharf.cn/
 + Response 200 (application/json)
         
         []
-        
-        
-## Questions Collection [/questions]
-### List All Questions [GET]
 
+## 岗位相关 [/post]
+### 获取岗位树 [GET /post/tree]
+       
++ Request (application/json)
+    
+        
 + Response 200 (application/json)
 
-        [
+        
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
+                "创意/设计": {
+                    "美工设计": [
+                        "设计",
+                        "美工"
+                    ],
+                    "美化": [
+                        "图片处理",
+                        "摄影师",
+                        "精修美工"
+                    ],
+                    "互联网设计": [
+                        "交互设计",
+                        "网页设计制作",
+                        "UI设计"
+                    ]
+                },
+                "产品": {
+                    "产品": [
+                        "产品研发",
+                        "产品规划",
+                        "电商产品设计"
+                    ]
+                }
             }
-        ]
 
-### Create a New Question [POST]
+### 获取岗位列表 [GET /post/all/?category={category}]
++ Request (application/json)
++ Parameters
+    + category: "产品" (string) - "岗位三级类别"
+        
++ Response 200 (application/json)
+
+        
+            [
+                {
+                    "pid":1,
+                    "post_name":"岗位名称",
+                    "salary":"薪资",
+                    "requirement":"岗位要求",
+                    "company_name":"公司名称",
+                    "location":"办公地点"
+                },
+                {
+                    "pid":2,
+                    "post_name":"同上"
+                }
+            ]
+    
+### 获取岗位详细信息 [GET /post/info/?pid={pid}]
++ Request (application/json)
++ Parameters
+    + pid: 1 (number) - "岗位编号"
+        
++ Response 200 (application/json)
+
+            {
+                "pid":1,
+                "node_3":"岗位类别（三级）",
+                "post_name":"岗位名称",
+                "salary":"薪资",
+                "requirement":"岗位要求",
+                "description":"岗位介绍",
+                "welfare":"岗位福利",
+                "company_name":"公司名称",
+                "company_info":"公司信息",
+                "location":"办公地点"
+            }
+
+### （后端测试用）Create a New Question [POST]
 
 You may create your own question using this action. It takes a JSON
 object containing a question and a collection of answers in the
