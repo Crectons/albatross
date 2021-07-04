@@ -31,5 +31,5 @@ urlpatterns = [
     path('user/', csrf_exempt(server_views.userInfoRelated)),
     path('post/tree/', csrf_exempt(server_views.getPostTree)),
     path('post/all/', csrf_exempt(server_views.getAllPost)),
-
+    path('post/info/', csrf_exempt(server_views.getPostInfo)),
 ]

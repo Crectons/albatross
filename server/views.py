@@ -77,23 +77,38 @@ def getPostTree(request):
 def getAllPost(request):
     if request.method == "GET":
         category = request.GET.get('category')
-        res = {}
-        res['post_list'] = []
+        res = []
         post_list = Post.objects.filter(node_3=category)
         for item in post_list:
             info = {}
+            info['pid'] = item.pid
             info['post_name'] = item.post_name
             info['salary'] = item.salary
             info['requirement'] = item.requirement
             info['company_name'] = item.company_name
             info['location'] = item.location
-            res['post_list'].append(info)
+            res.append(info)
         return JsonResponse(res)
 
 
 def getPostInfo(request):
     if request.method == "GET":
-        return True
+        pid = request.GET.get('category')
+        item = Post.objects.filter(pid=pid)
+        if not item:
+            return HttpResponse(status=404)
+        res = {}
+        res['pid'] = item.pid
+        res['node_3'] = item.node_3
+        res['post_name'] = item.post_name
+        res['salary'] = item.salary
+        res['requirement'] = item.requirement
+        res['description'] = item.description
+        res['welfare'] = item.welfare
+        res['company_name'] = item.company_name
+        res['company_info'] = item.company_info
+        res['location'] = item.location
+        return JsonResponse(res)
 
 
 def photo(request):  # 图片上传服务
