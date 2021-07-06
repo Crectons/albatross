@@ -88,15 +88,16 @@ def getAllPost(request):
             info['company_name'] = item.company_name
             info['location'] = item.location
             res.append(info)
-        return JsonResponse(res)
+        return JsonResponse(res,safe=False)
 
 
 def getPostInfo(request):
     if request.method == "GET":
-        pid = request.GET.get('category')
+        pid = request.GET.get('pid')
         item = Post.objects.filter(pid=pid)
         if not item:
             return HttpResponse(status=404)
+        item = item[0]
         res = {}
         res['pid'] = item.pid
         res['node_3'] = item.node_3
