@@ -120,8 +120,6 @@ def getUserInfo(request):
             return HttpResponse(status=404)
         item = item[0]
 
-        item.name
-
         res = {}
         res['name'] = item.name
         res['sex'] = item.sex
