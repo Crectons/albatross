@@ -49,11 +49,10 @@ def userInfoRelated(request):
         return HttpResponse(status=200)
 
 
-
 def getPostTree(request):
     if request.method == "GET":
         res = {}
-        ban_list_2 = ['产品规划','产品研发','电商产品设计']
+        ban_list_2 = ['产品规划', '产品研发', '电商产品设计']
         ban_list_3 = ['产品']
         info = PostTree.objects.all()
         for item in info:
@@ -88,7 +87,7 @@ def getAllPost(request):
             info['company_name'] = item.company_name
             info['location'] = item.location
             res.append(info)
-        return JsonResponse(res,safe=False)
+        return JsonResponse(res, safe=False)
 
 
 def getPostInfo(request):
@@ -110,6 +109,73 @@ def getPostInfo(request):
         res['company_info'] = item.company_info
         res['location'] = item.location
         return JsonResponse(res)
+
+
+def getUserInfo(request):
+    if request.method == "GET":
+
+        uid = request.GET.get('uid')
+        item = UserInfo.objects.filter(uid=uid)
+        if not item:
+            return HttpResponse(status=404)
+        item = item[0]
+
+        item.name
+
+        res = {}
+        res['name'] = item.name
+        res['sex'] = item.sex
+        res['birth'] = item.birth
+        res['location'] = item.location
+        res['phone'] = item.phone
+        res['email'] = item.email
+        res['work_experience'] = item.work_experience
+        res['school'] = item.school
+        res['qualification'] = item.qualification
+        res['major'] = item.major
+        res['is_graduate'] = item.is_graduate
+        res['edu_details'] = item.edu_details
+        res['skills'] = item.skills
+        res['training_experience'] = item.training_experience
+        res['personal_experience'] = item.personal_experience
+        res['self_evaluate'] = item.self_evaluate
+
+        return JsonResponse(res)
+
+
+def setUserInfo(request):
+    if request.method == "GET":
+
+        uid = request.GET.get('uid')
+        item = UserInfo.objects.filter(uid=uid)
+        if not item:
+            return HttpResponse(status=404)
+        item = item[0]
+
+        UserInfo.objects.update_or_create(
+            uid=uid,
+            defaults={
+                'name': request.GET.get('name'),
+                'sex': request.GET.get('sex'),
+                'birth': request.GET.get('birth'),
+                'location': request.GET.get('location'),
+                'phone': request.GET.get('phone'),
+                'email': request.GET.get('email'),
+                'work_experience': request.GET.get('work_experience'),
+                'school': request.GET.get('school'),
+                'qualification': request.GET.get('qualification'),
+                'major': request.GET.get('major'),
+                'is_graduate': request.GET.get('is_graduate'),
+                'edu_details': request.GET.get('edu_details'),
+                'skills': request.GET.get('skills'),
+                'training_experience': request.GET.get('training_experience'),
+                'personal_experience': request.GET.get('personal_experience'),
+                'self_evaluate': request.GET.get('self_evaluate'),
+            }
+        )
+
+        return HttpResponse(status=200)
+
 
 
 def photo(request):  # 图片上传服务

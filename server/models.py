@@ -13,15 +13,24 @@ class UserInfo(models.Model):  # 用户信息
 
     # 个人基本信息
     name = models.TextField(default='')  # 姓名
-    sex = models.IntegerField(default='')  # 性别 男0女1
-    age = models.IntegerField(default='')  # 年龄
+    sex = models.TextField(default='')  # 性别
+    birth = models.TextField(default='')  # 生日
+    # age = models.IntegerField(default='')  # 年龄
+    location = models.TextField(default='')  # 居住地
     phone = models.TextField(default='')  # 电话
     email = models.TextField(default='')  # 邮箱
 
-    educational_experience = models.TextField(default='')  # 教育经历
-    opration_experience = models.TextField(default='')  # 跨境平台运营经历
-    language_ability = models.TextField(default='')  # 外语能力
-    personal_works = models.TextField(default='')  # 个人作品
+    work_experience = models.TextField(default='')  # 工作经历
+    school = models.TextField(default='')  # 学校
+    qualification = models.TextField(default='')  # 学历
+    major = models.TextField(default='')  # 专业
+    is_graduate = models.TextField(default='')  # 应届生/毕业生
+    edu_details = models.TextField(default='')  # 教育经历详情
+
+    skills = models.TextField(default='')  # 技能
+    training_experience = models.TextField(default='')  # 培训经理
+    personal_experience = models.TextField(default='')  # 个人经历
+    self_evaluate = models.TextField(default='')  # 自我评价
 
     def __str__(self):
         return self.id_num
