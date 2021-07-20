@@ -151,6 +151,35 @@ HOST: https://albatross.herowharf.cn/
                 "location":"办公地点"
             }
 
+## 求职意向相关 [/intention]
+
+### 添加求职意向 [GET /intention/all/?uid={uid}&node_3={node_3}]
++ Request (application/json)
++ Parameters
+    + uid: "用户id" (int) - "用户id"
+    + node_3: "三级岗位" (string) - "三级岗位"   
+
++ Response 200 (application/json)
+    
+        {
+     
+        }
+
+
+### 获取求职意向列表 [GET /intention/all/?uid={uid}]
++ Request (application/json)
++ Parameters
+    + uid: "用户id" (int) - "用户id"
+        
++ Response 200 (application/json)
+
+        
+            [
+                "三级岗位1","三级岗位2"
+            ]
+
+
+
 ### （后端测试用）Create a New Question [POST]
 
 You may create your own question using this action. It takes a JSON
