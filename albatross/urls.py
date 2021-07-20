@@ -34,4 +34,6 @@ urlpatterns = [
     path('post/info/', csrf_exempt(server_views.getPostInfo)),
     path('user/getinfo/', csrf_exempt(server_views.getUserInfo)),
     path('user/setinfo/', csrf_exempt(server_views.setUserInfo)),
+    path('intention/add/', csrf_exempt(server_views.addIntention)),
+    path('intention/all/', csrf_exempt(server_views.getAllIntention)),
 ]

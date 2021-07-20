@@ -74,7 +74,7 @@ class PostTree(models.Model): # 岗位信息
     class Meta:
         app_label = 'server'
 
-class company(models.Model):
+class Company(models.Model):
 
     cid = models.AutoField(primary_key=True)
 
@@ -84,4 +84,15 @@ class company(models.Model):
     class Meta:
         app_label = 'server'
 
-#class News(models.Model):  # 新闻资讯
+class Intention(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    uid = models.AutoField(primary_key=True)
+    node_3 = models.TextField(default='')
+
+
+    def __str__(self):
+        return self.id_num
+
+    class Meta:
+        app_label = 'server'
