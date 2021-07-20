@@ -104,6 +104,7 @@ def getPostInfo(request):
         res['salary'] = item.salary
         res['requirement'] = item.requirement
         res['description'] = item.description
+        res['experience'] = item.experience
         res['welfare'] = item.welfare
         res['company_name'] = item.company_name
         res['company_info'] = item.company_info

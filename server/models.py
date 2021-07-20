@@ -46,10 +46,11 @@ class Post(models.Model): # 岗位信息
     node_2 = models.TextField(default='')  # 二级岗位
     node_3 = models.TextField(default='')  # 三级岗位
     post_name = models.TextField(default='')  # 岗位名称
-    salary = models.TextField(default='')  # 岗位名称
-    #salary_low = models.TextField(default='')  # 薪水下限
-    #salary_high = models.TextField(default='')  # 薪水上限
-    requirement = models.TextField(default='')  # 岗位要求
+    salary = models.TextField(default='')  # 薪水情况
+    # salary_low = models.TextField(default='')  # 薪水下限
+    # salary_high = models.TextField(default='')  # 薪水上限
+    requirement = models.TextField(default='')  # 岗位学历要求
+    experience = models.TextField(default='')  # 工作经验
     description = models.TextField(default='')  # 岗位介绍
     welfare = models.TextField(default='')  # 福利
     company_name = models.TextField(default='')  # 公司名称
