@@ -25,10 +25,9 @@ def oauth(request):
         ed = req.get('ed')  # encrypted_data
         iv = req.get('iv')  # initialization vector
         code = req.get('code')  # code
-
         logger.info(u'Received request successfully')
-
         account = verify_wxapp(ed, iv, code)  # 此步进行数据库的存储或更新
+
         if not account:
             response = {}
             response.status_code = 406

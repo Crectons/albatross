@@ -26,8 +26,8 @@ SECRET_KEY = '5a0r_e@%=430()3f=kobz#k9&p3855b@%@s*4br1_cv%n^u*=5'
 DEBUG = False
 
 #小程序配置
-APPID = "wxc68dfcdcdddfb429"
-SECRET = "6efdfcc1ecb0d20cc4d7ca3f46418197"
+APPID = "wxe7921349558a629b"
+SECRET = "41d2c0357d34bdde7fb3f6a5c081ff64"
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
