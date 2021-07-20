@@ -87,7 +87,7 @@ class Company(models.Model):
 class Intention(models.Model):
 
     id = models.AutoField(primary_key=True)
-    uid = models.AutoField(primary_key=True)
+    uid = models.IntegerField(default='')
     node_3 = models.TextField(default='')
 
 

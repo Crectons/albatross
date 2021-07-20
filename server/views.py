@@ -179,7 +179,7 @@ def addIntention(request):
     if request.method == "GET":
         uid = request.GET.get('uid')
         node_3 = request.GET.get('node_3')
-        Intention.objects.create(default={'uid':uid,'node_3':node_3})
+        Intention.objects.create(uid=uid,node_3=node_3)
         return HttpResponse(status=200)
 
 
@@ -190,7 +190,7 @@ def getAllIntention(request):
         res = []
         for item in result:
             res.append(item.node_3)
-        return JsonResponse(res)
+        return JsonResponse(res,safe=False)
 
 
 def photo(request):  # 图片上传服务
