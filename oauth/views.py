@@ -20,21 +20,21 @@ logger = logging.getLogger(__name__)
 
 
 def oauth(request):
-    req = json.loads(request.body.decode())
-    ed = req.get('ed')  # encrypted_data
-    iv = req.get('iv')  # initialization vector
-    code = req.get('code')  # code
+    if request.method == "POST":
+        req = json.loads(request.body.decode())
+        ed = req.get('ed')  # encrypted_data
+        iv = req.get('iv')  # initialization vector
+        code = req.get('code')  # code
 
-    logger.info(u'Received request successfully')
+        logger.info(u'Received request successfully')
 
-    account = verify_wxapp(ed, iv, code)  # 此步进行数据库的存储或更新
-    if not account:
-        response = {}
-        response.status_code = 406
-        response['message'] = "获取openid失败"
-        logger.info(u'Failed getting openid.')
-        return response
-    logger.info(u'Got openid successfully')
+        account = verify_wxapp(ed, iv, code)  # 此步进行数据库的存储或更新
+        if not account:
+            response = {}
+            response.status_code = 406
+            response['message'] = "获取openid失败"
+            logger.info(u'Failed getting openid.')
+            return response
+        logger.info(u'Got openid successfully')
 
-    return JsonResponse({'uid': account.uid})
-    #return JsonResponse({'token': token, 'refresh_token': refresh_token, })
+        return JsonResponse({'uid': account.uid})
