@@ -10,8 +10,12 @@ from weixin.lib.wxcrypt import WXBizDataCrypt
 from server.tasks import *
 from server.models import *
 
+import logging
+
+logger = logging.getLogger(__name__)
 
 def test(request):
+    logger.info(u'test success')
     return HttpResponse(status=200)
 
 

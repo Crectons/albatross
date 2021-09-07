@@ -20,11 +20,12 @@ logger = logging.getLogger(__name__)
 
 
 def oauth(request):
-    if request.method == "POST":
-        req = json.loads(request.body.decode())
-        ed = req.get('ed')  # encrypted_data
-        iv = req.get('iv')  # initialization vector
-        code = req.get('code')  # code
+    logger.info(u'Got request successfully with method {sid}.'.format(sid=request.method))
+    
+    if request.method == "GET":
+        ed = request.GET.get('ed')  # encrypted_data
+        iv = request.GET.get('iv')  # initialization vector
+        code = request.GET.get('code')  # code
         logger.info(u'Received request successfully')
         account = verify_wxapp(ed, iv, code)  # 此步进行数据库的存储或更新
 
@@ -33,7 +34,33 @@ def oauth(request):
             response.status_code = 406
             response['message'] = "获取openid失败"
             logger.info(u'Failed getting openid.')
-            return response
-        logger.info(u'Got openid successfully')
+            return JsonResponse(response)
+        #logger.info(u'Got openid successfully')
+        logger.info(u'Got openid successfully with sid {sid}.'.format(sid=account.uid))
+        return JsonResponse({'uid': account.uid})
 
+
+    if request.method == "POST":
+        logger.info(u'Got request successfully with method {sid}.'.format(sid=request.body))
+        """
+        req = json.loads(request.body.decode('utf-8'))
+        ed = req.get('ed')  # encrypted_data
+        iv = req.get('iv')  # initialization vector
+        code = req.get('code')  # code
+        """
+        ed = request.POST['ed']  # encrypted_data
+        iv = request.POST['iv']  # initialization vector
+        code = request.POST['code']  # code
+
+        logger.info(u'Received request successfully')
+        account = verify_wxapp(ed, iv, code)  # 此步进行数据库的存储或更新
+
+        if not account:
+            response = {}
+            response.status_code = 406
+            response['message'] = "获取openid失败"
+            logger.info(u'Failed getting openid.')
+            return JsonResponse(response)
+        #logger.info(u'Got openid successfully')
+        logger.info(u'Got openid successfully with sid {sid}.'.format(sid=account.uid))
         return JsonResponse({'uid': account.uid})
