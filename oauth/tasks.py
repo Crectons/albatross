@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.conf import settings
+from weixin.client import WeixinMpAPI
 
 from weixin.lib.wxcrypt import WXBizDataCrypt
 from weixin import WXAPPAPI
@@ -33,11 +34,35 @@ def get_wxmp_openid(code):  # 获取微信用户信息 iv:initialization vector 
     openid = session_info.get('openid')
     return openid
 
+def get_wxweb_openid(code):
+    appid = settings.APPID
+    secret = settings.SECRET
+    # scope = ('snsapi_base',)
+    api = WeixinMpAPI(appid=appid, app_secret=secret)
+    try:
+        access_info = api.exchange_code_for_access_token(code=code)
+        # 使用 code  换取 session_info
+    except OAuth2AuthExchangeError:
+        logger.info(u'OAuth2AuthExchangeError')
+        return HttpResponse(status=401)
+    openid = access_info.get('openid')
+    return openid
 
-def verify_wxapp(code):  # 获取openid，注册或返回已有账户 update creat
+def verify_wxmp(code):  # 获取openid，注册或返回已有账户 update creat
 
     # 获取 openid
     openid = get_wxmp_openid(code)
+    if openid:
+        auth, created = UserInfo.objects.update_or_create(openid=openid,
+                                                           defaults={})
+        return auth
+    # auth is an object
+    return False
+
+def verify_wxweb(code):  # 获取openid，注册或返回已有账户 update creat
+
+    # 获取 openid
+    openid = get_wxweb_openid(code)
     if openid:
         auth, created = UserInfo.objects.update_or_create(openid=openid,
                                                            defaults={})

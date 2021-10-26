@@ -24,8 +24,12 @@ def oauth(request):
     
     if request.method == "GET":
         code = request.GET.get('code')  # code
+        type = request.GET.get('type')  # type
         logger.info(u'Received request successfully')
-        account = verify_wxapp(code)  # 此步进行数据库的存储或更新
+        if (type == 'mp'):
+            account = verify_wxmp(code)  # 此步进行数据库的存储或更新
+        elif (type == 'web'):
+            account = verify_wxweb(code)  # 此步进行数据库的存储或更新
 
         if not account:
             response = {}
@@ -47,9 +51,13 @@ def oauth(request):
         code = req.get('code')  # code
         """
         code = request.POST['code']  # code
+        type = request.POST['type']  # type
 
         logger.info(u'Received request successfully')
-        account = verify_wxapp(code)  # 此步进行数据库的存储或更新
+        if (type == 'mp'):
+            account = verify_wxmp(code)  # 此步进行数据库的存储或更新
+        elif (type == 'web'):
+            account = verify_wxweb(code)  # 此步进行数据库的存储或更新
 
         if not account:
             response = {}
