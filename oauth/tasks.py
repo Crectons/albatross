@@ -34,7 +34,7 @@ def get_wxmp_openid(code):  # 获取微信用户信息 iv:initialization vector 
     return openid
 
 
-def verify_wxapp(encrypted_data, iv, code):  # 获取openid，注册或返回已有账户 update creat
+def verify_wxapp(code):  # 获取openid，注册或返回已有账户 update creat
 
     # 获取 openid
     openid = get_wxmp_openid(code)

@@ -23,11 +23,9 @@ def oauth(request):
     logger.info(u'Got request successfully with method {sid}.'.format(sid=request.method))
     
     if request.method == "GET":
-        ed = request.GET.get('ed')  # encrypted_data
-        iv = request.GET.get('iv')  # initialization vector
         code = request.GET.get('code')  # code
         logger.info(u'Received request successfully')
-        account = verify_wxapp(ed, iv, code)  # 此步进行数据库的存储或更新
+        account = verify_wxapp(code)  # 此步进行数据库的存储或更新
 
         if not account:
             response = {}
@@ -48,12 +46,10 @@ def oauth(request):
         iv = req.get('iv')  # initialization vector
         code = req.get('code')  # code
         """
-        ed = request.POST['ed']  # encrypted_data
-        iv = request.POST['iv']  # initialization vector
         code = request.POST['code']  # code
 
         logger.info(u'Received request successfully')
-        account = verify_wxapp(ed, iv, code)  # 此步进行数据库的存储或更新
+        account = verify_wxapp(code)  # 此步进行数据库的存储或更新
 
         if not account:
             response = {}
