@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'server',
     'oauth',
-    'apiblueprint_view',
 ]
 
 # swagger 配置项

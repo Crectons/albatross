@@ -13,16 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 from server import views as server_views
 from oauth import views as oauth_views
-from apiblueprint_view.views import ApiBlueprintView
 
 urlpatterns = [
-    url(r'^docs/$', ApiBlueprintView.as_view(blueprint=r'apiary.apib')),
     path('', csrf_exempt(server_views.test)),
     path('test/', csrf_exempt(server_views.test)),
     path('admin/', admin.site.urls),
