@@ -10,3 +10,4 @@ db.sqlite3
 
 *.pyc
 __pycache__
+uwsgi.pid
