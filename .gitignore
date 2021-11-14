@@ -7,3 +7,6 @@ dataSources.local.xml
 db.sqlite3
 
 /node_modules
+
+*.pyc
+__pycache__
