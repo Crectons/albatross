@@ -262,3 +262,6 @@ LOGGING = {
         },
     },
 }
+
+# Auto-created primary key type
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
