@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '5a0r_e@%=430()3f=kobz#k9&p3855b@%@s*4br1_cv%n^u*=5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 #小程序配置
 APPID = "wxe7921349558a629b"
