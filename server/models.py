@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class UserInfo(models.Model):  # 用户信息
 
     uid = models.AutoField(primary_key=True)
@@ -33,15 +34,16 @@ class UserInfo(models.Model):  # 用户信息
     self_evaluate = models.TextField(default='')  # 自我评价
 
     def __str__(self):
-        return self.id_num
+        return f'{self.uid}-{self.name}'
 
     class Meta:
         app_label = 'server'
 
+
 class Post(models.Model): # 岗位信息
 
     pid = models.AutoField(primary_key=True)
-    #cid = models.IntegerField(default='')
+    # cid = models.IntegerField(default='')
     node_1 = models.TextField(default='')  # 一级岗位
     node_2 = models.TextField(default='')  # 二级岗位
     node_3 = models.TextField(default='')  # 三级岗位
@@ -57,12 +59,12 @@ class Post(models.Model): # 岗位信息
     company_info = models.TextField(default='')  # 公司信息
     location = models.TextField(default='')  # 办公地点
 
-
     def __str__(self):
-        return self.id_num
+        return f'{self.pid}-{self.post_name}'
 
     class Meta:
         app_label = 'server'
+
 
 class PostTree(models.Model): # 岗位信息
 
@@ -70,20 +72,22 @@ class PostTree(models.Model): # 岗位信息
     name_son = models.TextField(default='')  # 子节点名称
 
     def __str__(self):
-        return self.id_num
+        return f'{self.name_father}-{self.name_son}'
 
     class Meta:
         app_label = 'server'
+
 
 class Company(models.Model):
 
     cid = models.AutoField(primary_key=True)
 
     def __str__(self):
-        return self.id_num
+        return self.cid
 
     class Meta:
         app_label = 'server'
+
 
 class Intention(models.Model):
 
@@ -91,9 +95,8 @@ class Intention(models.Model):
     uid = models.IntegerField(default='')
     node_3 = models.TextField(default='')
 
-
     def __str__(self):
-        return self.id_num
+        return self.id
 
     class Meta:
         app_label = 'server'
