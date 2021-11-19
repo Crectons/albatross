@@ -34,7 +34,7 @@ class UserInfo(models.Model):  # 用户信息
     self_evaluate = models.TextField(default='')  # 自我评价
 
     def __str__(self):
-        return f'{self.uid}-{self.name}'
+        return f'{self.uid}: {self.name}'
 
     class Meta:
         app_label = 'server'
@@ -60,7 +60,7 @@ class Post(models.Model): # 岗位信息
     location = models.TextField(default='')  # 办公地点
 
     def __str__(self):
-        return f'{self.pid}-{self.post_name}'
+        return f'{self.pid}: {self.post_name}-{self.company_name}'
 
     class Meta:
         app_label = 'server'
@@ -72,7 +72,7 @@ class PostTree(models.Model): # 岗位信息
     name_son = models.TextField(default='')  # 子节点名称
 
     def __str__(self):
-        return f'{self.name_father}-{self.name_son}'
+        return f'{self.name_father} -> {self.name_son}'
 
     class Meta:
         app_label = 'server'
@@ -83,7 +83,7 @@ class Company(models.Model):
     cid = models.AutoField(primary_key=True)
 
     def __str__(self):
-        return self.cid
+        return f'{self.cid}'
 
     class Meta:
         app_label = 'server'
@@ -96,7 +96,7 @@ class Intention(models.Model):
     node_3 = models.TextField(default='')
 
     def __str__(self):
-        return self.id
+        return f'{self.id}: {self.uid}-{self.node_3}'
 
     class Meta:
         app_label = 'server'
