@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -25,7 +24,7 @@ SECRET_KEY = '5a0r_e@%=430()3f=kobz#k9&p3855b@%@s*4br1_cv%n^u*=5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#小程序配置
+# 小程序配置
 APPID = "wxe7921349558a629b"
 SECRET = "41d2c0357d34bdde7fb3f6a5c081ff64"
 
@@ -38,7 +37,6 @@ ALLOWED_HOSTS = [
     'localhost'
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,8 +46,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'server',
-    'oauth',
+
+    'django_filters',
+    'rest_framework',
+
+    'user',
+    'recruit',
+    'company',
+    'area'
 ]
 
 # swagger 配置项
@@ -107,29 +111,33 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'albatross.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-'''
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'albatross',
+#         'USER': 'igamango',
+#         'PASSWORD': 'Lxn*707771838',
+#         'HOST': 'rm-bp16zb0h9kz7v0h67po.mysql.rds.aliyuncs.com',
+#         'PORT': '3306',
+#         'TEST': {'CHARSET': 'UTF8', },
+#     }
+# }
+
+# local test mysql server
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'albatross',
-        'USER': 'igamango',
-        'PASSWORD': 'Lxn*707771838',
-        'HOST': 'rm-bp16zb0h9kz7v0h67po.mysql.rds.aliyuncs.com',
+        'USER': 'albatross',
+        'PASSWORD': 'albatross',
+        'HOST': 'localhost',
         'PORT': '3306',
-        'TEST': {'CHARSET': 'UTF8', },
-#        'OPTIONS': {
-#            'timeout': 20,
-#        },
+        #        'TEST': {'CHARSET': 'UTF8', },
+        #        'OPTIONS': {
+        #            'timeout': 20,
+        #        },
     }
 }
 
@@ -151,7 +159,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -164,7 +171,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -254,14 +260,29 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-        'oauth': {
-            'handlers': ['console', 'oauth'],
-            # 这里直接输出到控制台只是请求的路由等系统console，当使用重定向之后会把所有内容输出到log日志
-            'level': 'DEBUG',
-            'propagate': True,
-        },
     },
 }
 
 # Auto-created primary key type
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# drf 配置
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
+    # 自定义异常捕获
+    'EXCEPTION_HANDLER': 'albatross.utils.Exception.exception_handler',
+    # 过滤后端
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    # 分页
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,  # 默认每页数目
+    'PAGE_SIZE_QUERY_PARAM': 'page_size',  # 控制每页数目的参数
+}
+
+# DRF扩展
+REST_FRAMEWORK_EXTENSIONS = {
+    # 缓存时间
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 60,
+    # 缓存存储
+    'DEFAULT_USE_CACHE': 'default',
+}

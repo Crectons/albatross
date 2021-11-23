@@ -15,22 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.views.decorators.csrf import csrf_exempt
-from server import views as server_views
-from oauth import views as oauth_views
+from django.conf.urls import url, include
+from rest_framework.documentation import include_docs_urls
+from rest_framework import routers
+
+from user import views as user_views
+from recruit import views as recruit_views
+from company import views as company_views
 
 urlpatterns = [
-    path('', csrf_exempt(server_views.test)),
-    path('test/', csrf_exempt(server_views.test)),
+    url(r'docs/', include_docs_urls(title='接口文档')),
+    path(r'area/', include('area.urls')),
     path('admin/', admin.site.urls),
-    path('photo/', csrf_exempt(server_views.photo)),
-    path('login/', csrf_exempt(oauth_views.oauth)),
-    path('user/', csrf_exempt(server_views.userInfoRelated)),
-    path('post/tree/', csrf_exempt(server_views.getPostTree)),
-    path('post/all/', csrf_exempt(server_views.getAllPost)),
-    path('post/info/', csrf_exempt(server_views.getPostInfo)),
-    path('user/getinfo/', csrf_exempt(server_views.getUserInfo)),
-    path('user/setinfo/', csrf_exempt(server_views.setUserInfo)),
-    path('intention/add/', csrf_exempt(server_views.addIntention)),
-    path('intention/all/', csrf_exempt(server_views.getAllIntention)),
 ]
+
+router = routers.DefaultRouter()
+router.register(r'user', user_views.UserInfoViewSet)
+router.register(r'post', recruit_views.PostInfoViewSet)
+router.register(r'classification', recruit_views.PostTreeViewSet)
+router.register(r'company', company_views.CompanyInfoViewSet)
+
+urlpatterns += router.urls
