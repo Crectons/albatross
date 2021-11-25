@@ -9,8 +9,9 @@ logger = logging.getLogger(__name__)
 
 
 class UserInfoViewSet(ModelViewSet):
-    queryset = UserInfo.objects.all()
+    queryset = UserInfo.objects.all().order_by('uid')
     serializer_class = UserInfoSerializer
+    exclude = ['is_deleted']
 
 
 class UserIntentionViewSet(ModelViewSet):

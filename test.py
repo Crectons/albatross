@@ -9,7 +9,7 @@ import django
 pathname = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, pathname)
 sys.path.insert(0, os.path.abspath(os.path.join(pathname, '..')))
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "albatross.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "albatross.settings_dev")
 
 django.setup()
 
@@ -186,18 +186,21 @@ data = {
 
 for key_1 in data:
     node_1 = PostTree(
-        name=key_1
+        name=key_1,
+        type=1
     )
     node_1.save()
     for key_2 in data[key_1]:
         node_2 = PostTree(
             name=key_2,
+            type=2,
             father=node_1
         )
         node_2.save()
         for key_3 in data[key_1][key_2]:
             node_3 = PostTree(
                 name=key_3,
+                type=3,
                 father=node_2
             )
             node_3.save()

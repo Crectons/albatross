@@ -16,7 +16,7 @@ class UserInfo(SoftDeleteModel):
     province = models.TextField(default='', verbose_name='省份')
     city = models.TextField(default='', verbose_name='城市')
     session_key = models.TextField(default='')
-    avatar = models.TextField(default='', verbose_name='头像')
+    avatar = models.ImageField(upload_to='avatar', default='', verbose_name='头像')
     openid = models.TextField(default='')
 
     # 个人基本信息

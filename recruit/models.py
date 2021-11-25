@@ -1,6 +1,6 @@
 from django.db import models
 
-from utils.Choice import EducationChoice
+from utils.Choice import EducationChoice, ClassificationChoice, SalaryTypeChoice
 from utils.SoftDelete import SoftDeleteModel
 
 
@@ -8,6 +8,7 @@ class PostTree(models.Model):
 
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, verbose_name='岗位分类名')
+    type = models.IntegerField(choices=ClassificationChoice.choices, verbose_name='岗位分类类型')
     father = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,
                                related_name='children', verbose_name='父级分类')
 
@@ -31,11 +32,11 @@ class PostInfo(SoftDeleteModel):  # 岗位信息
     post_name = models.CharField(max_length=100, default='', verbose_name='岗位名称')  # 岗位名称
     salary_low = models.IntegerField(default=0, verbose_name='薪资下限')
     salary_high = models.IntegerField(default=0, verbose_name='薪资上限')
-    salary_type = models.BooleanField(null=True, blank=True, verbose_name='薪资类型')  # 薪资类型，0为月薪，1为年薪
+    salary_type = models.IntegerField(choices=SalaryTypeChoice.choices, default=0, verbose_name='薪资类型')
     education = models.IntegerField(choices=EducationChoice.choices, default=EducationChoice.ALL, verbose_name='学历要求')  # 岗位学历要求
     experience = models.CharField(max_length=100, default='', verbose_name='工作经验')  # 工作经验
     description = models.TextField(default='', verbose_name='岗位介绍')  # 岗位介绍
-    welfare = models.TextField(default='')  # 福利
+    welfare = models.TextField(default='', verbose_name='福利')  # 福利
 
     company = models.ForeignKey('company.CompanyInfo', on_delete=models.CASCADE, null=True, blank=True,
                                 verbose_name='公司')

@@ -60,13 +60,13 @@ INSTALLED_APPS = [
 SWAGGER_SETTINGS = {
     # 基础样式
     'SECURITY_DEFINITIONS': {
-        "basic":{
+        "basic": {
             'type': 'basic'
         }
     },
     # 如果需要登录才能够查看接口文档, 登录的链接使用restframework自带的.
-#    'LOGIN_URL': 'rest_framework:login',
-#    'LOGOUT_URL': 'rest_framework:logout',
+    #    'LOGIN_URL': 'rest_framework:login',
+    #    'LOGOUT_URL': 'rest_framework:logout',
     # 'DOC_EXPANSION': None,
     # 'SHOW_REQUEST_HEADERS':True,
     # 'USE_SESSION_AUTH': True,
@@ -79,7 +79,6 @@ SWAGGER_SETTINGS = {
     'OPERATIONS_SORTER': 'alpha',
     'VALIDATOR_URL': None,
 }
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -270,7 +269,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
     # 自定义异常捕获
-    'EXCEPTION_HANDLER': 'albatross.utils.Exception.exception_handler',
+    # 'EXCEPTION_HANDLER': 'albatross.utils.Exception.exception_handler',
     # 过滤后端
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     # 分页

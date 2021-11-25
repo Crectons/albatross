@@ -18,3 +18,15 @@ class EducationChoice(models.IntegerChoices):
     BEN_KE = 7, '本科'
     SHUO_SHI = 8, '硕士'
     BO_SHI = 9, '博士'
+
+
+class ClassificationChoice(models.IntegerChoices):
+    NODE_1 = 1, '一级分类'
+    NODE_2 = 2, '二级分类'
+    NODE_3 = 3, '三级分类'
+
+
+class SalaryTypeChoice(models.IntegerChoices):
+    UNKNOWN = 0, '未知',
+    MONTH = 1, '月薪',
+    YEAR = 2, '年薪'
