@@ -15,6 +15,6 @@ sys.path.append("/usr/lib/python3.6/site-packages")
 from django.core.wsgi import get_wsgi_application
 
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'albatross.settings')
-os.environ['DJANGO_SETTINGS_MODULE'] = 'albatross.settings_prod'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'albatross.settings.prod'
 
 application = get_wsgi_application()

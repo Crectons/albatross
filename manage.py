@@ -5,9 +5,8 @@ import sys
 
 def main():
     # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'albatross.setting.dev')
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'albatross.settings_dev'
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'albatross.settings.dev'
 
-    checkLogs()
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -18,15 +17,6 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
-def checkLogs():
-    if (not os.path.exists('./logs')) or (not os.path.isdir('./logs')):
-        os.mkdir('./logs')
-        open('./logs/all.log', 'w').close()
-        open('./logs/django.log', 'w').close()
-        open('./logs/oauth.log', 'w').close()
-        open('./logs/request.log', 'w').close()
-        open('./logs/server.log', 'w').close()
-        open('./logs/test.log', 'w').close()
 
 if __name__ == '__main__':
     main()

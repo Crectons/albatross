@@ -19,13 +19,13 @@ from django.conf.urls import url, include
 from rest_framework.documentation import include_docs_urls
 from rest_framework import routers
 
-from user import views as user_views
-from recruit import views as recruit_views
-from company import views as company_views
+from albatross.apps.users import views as user_views
+from albatross.apps.recruits import views as recruit_views
+from albatross.apps.companies import views as company_views
 
 urlpatterns = [
     url(r'docs/', include_docs_urls(title='接口文档')),
-    path(r'area/', include('area.urls')),
+    path(r'area/', include('albatross.apps.areas.urls')),
     path('admin/', admin.site.urls),
 ]
 
