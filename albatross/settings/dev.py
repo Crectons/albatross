@@ -16,7 +16,7 @@ import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))  # 新增导包路径
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))  # 新增导包路径，目前应用位于 apps 目录下
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/

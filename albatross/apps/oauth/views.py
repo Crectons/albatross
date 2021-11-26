@@ -16,7 +16,7 @@ class OpenIDTokenObtainPairView(TokenObtainPairView):
 
     def post(self, request, *args, **kwargs):
         """
-        重写 post 方法, 增加 open id 登录
+        增加 post 方法, 支持 open id 登录
         """
         serializer = self.get_serializer(data=request.data)
 

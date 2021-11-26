@@ -5,7 +5,9 @@ from albatross.utils.SoftDelete import SoftDeleteModel
 
 
 class PostTree(models.Model):
-
+    """
+    岗位分类模型
+    """
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, verbose_name='岗位分类名')
     type = models.IntegerField(choices=ClassificationChoice.choices, verbose_name='岗位分类类型')
@@ -22,7 +24,10 @@ class PostTree(models.Model):
         verbose_name_plural = verbose_name
 
 
-class PostInfo(SoftDeleteModel):  # 岗位信息
+class PostInfo(SoftDeleteModel):
+    """
+    岗位信息模型
+    """
 
     pid = models.AutoField(primary_key=True, verbose_name='岗位ID')
     node_1 = models.ForeignKey(PostTree, on_delete=models.CASCADE, null=True, blank=True, verbose_name='一级岗位',

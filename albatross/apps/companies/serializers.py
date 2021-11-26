@@ -9,4 +9,4 @@ class CompanyInfoSerializer(ModelSerializer):
     """
     class Meta:
         model = CompanyInfo
-        exclude = ['is_deleted']
+        exclude = ['is_deleted']  # 不返回 is_deleted 字段

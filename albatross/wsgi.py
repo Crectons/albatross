@@ -14,7 +14,7 @@ sys.path.append("/usr/lib/python3.6/site-packages")
 
 from django.core.wsgi import get_wsgi_application
 
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'albatross.settings')
-os.environ['DJANGO_SETTINGS_MODULE'] = 'albatross.settings.prod'
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'albatross.settings')  # co: manage中环境变量添加失败，此处为了预防同样问题发生，也直接设定环境变量
+os.environ['DJANGO_SETTINGS_MODULE'] = 'albatross.settings.prod'  # 生产环境配置
 
 application = get_wsgi_application()

@@ -9,13 +9,13 @@ from albatross.utils.choices import EducationChoice
 
 class UserInfo(SoftDeleteModel, AbstractBaseUser):
     """
-    用户信息
+    用户信息 继承于 AbstractBaseUser 便于 jwt 鉴权
     """
 
     uid = models.AutoField(primary_key=True, verbose_name='用户ID')
-    password = None
+    password = None  # 无需 password 字段
 
-    # 微信相关个人信息
+    # 微信相关个人信息 TODO: 待完善具体信息
     province = models.TextField(default='', verbose_name='省份')
     city = models.TextField(default='', verbose_name='城市')
     session_key = models.TextField(default='')

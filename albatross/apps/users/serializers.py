@@ -11,6 +11,7 @@ class UserInfoSerializer(ModelSerializer):
         model = UserInfo
         exclude = ['is_deleted']
 
+    # 目前无需返回岗位分类字符串，建议前端预先存储posttree的dict字典便于后续操作
     # # intention 返回 str
     # intention = SerializerMethodField()
     #

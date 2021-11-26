@@ -1,8 +1,9 @@
 chardet==4.0.0
 Django==3.2.9
 djangorestframework==3.12.4
+djangorestframework_simplejwt==5.0.0
+drf_extensions==0.7.1
 pycryptodome==3.11.0
-PyJWT==2.3.0
 requests==2.26.0
 simplejson==3.17.5
 six==1.12.0

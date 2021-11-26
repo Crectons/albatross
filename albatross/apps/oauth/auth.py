@@ -9,7 +9,7 @@ from users.models import UserInfo
 
 class OpenIdAuth(BaseBackend):
     """
-    OpenID 验证模块
+    OpenID 验证模块(获取token时调用)
     """
 
     def authenticate(self, request, openid=None, **kwargs):
@@ -53,26 +53,32 @@ class OpenIdAuth(BaseBackend):
 
 
 class OpenIdJWTAuthentication(JWTAuthentication):
+    """
+    OpenID JWT 验证模块(访问接口django鉴权时调用)
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.user_model = UserInfo
+        self.user_model = UserInfo  # 直接限定用户模型，无需修改 django settings 中的默认用户类
 
     def get_user(self, validated_token):
         """
         Attempts to find and return a user using the given validated token.
         """
-        api_settings = rest_framework_simplejwt.settings.api_settings
+        api_settings = rest_framework_simplejwt.settings.api_settings  # 获取配置
+
+        # 获取用户 ID
         try:
             user_id = validated_token[api_settings.USER_ID_CLAIM]
         except KeyError:
-            raise InvalidToken('Token contained no recognizable user identification')
+            raise InvalidToken('Token contained no recognizable user identification')  # 无用户id, 认证失败
 
+        # 获取用户模型
         try:
             user = self.user_model.objects.get(**{api_settings.USER_ID_FIELD: user_id})
         except self.user_model.DoesNotExist:
-            raise AuthenticationFailed('User not found', code='user_not_found')
+            raise AuthenticationFailed('User not found', code='user_not_found')  # 用户不存在, 认证失败
 
         if not user.is_active:
-            raise AuthenticationFailed('User is inactive', code='user_inactive')
+            raise AuthenticationFailed('User is inactive', code='user_inactive')  # 用户未激活, 认证失败
 
         return user

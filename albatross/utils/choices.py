@@ -1,13 +1,20 @@
+# 枚举类型
 from django.db import models
 
 
 class GenderChoice(models.IntegerChoices):
+    """
+    性别，主要用于用户表
+    """
     SECRET = 0, 'Secret'
     MALE = 1, 'Male'
     FEMALE = 2, 'Female'
 
 
 class EducationChoice(models.IntegerChoices):
+    """
+    学历，用于岗位信息
+    """
     UNKNOWN = 0, '未知'
     ALL = 1, '不限'
     XIAO_XUE = 2, '小学'
@@ -21,12 +28,18 @@ class EducationChoice(models.IntegerChoices):
 
 
 class ClassificationChoice(models.IntegerChoices):
+    """
+    分类，用于岗位分类类型判断
+    """
     NODE_1 = 1, '一级分类'
     NODE_2 = 2, '二级分类'
     NODE_3 = 3, '三级分类'
 
 
 class SalaryTypeChoice(models.IntegerChoices):
+    """
+    薪资类型，用于岗位信息
+    """
     UNKNOWN = 0, '未知',
     MONTH = 1, '月薪',
     YEAR = 2, '年薪'

@@ -1,3 +1,4 @@
+# 逻辑删除模型
 import django.db
 import django.db.models
 
@@ -26,7 +27,7 @@ class SoftDeleteManager(django.db.models.Manager):
 
 class SoftDeleteModel(django.db.models.Model):
     """
-    抽象类，添加is_deleted 字段
+    抽象类，添加 is_deleted 字段
     """
     is_deleted = django.db.models.BooleanField(default=False, verbose_name='是否删除')
 

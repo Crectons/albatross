@@ -84,9 +84,9 @@ class WechatLoginSerializer(OpenIDTokenObtainPairSerializer):
         """
         重写获取 open_id 方法
         """
-        if attrs['type'] == 'wxmp':
+        if attrs['type'] == 'wxmp':  # 公众号登录
             return get_wxmp_openid(attrs['code'])
-        elif attrs['type'] == 'wxweb':
+        elif attrs['type'] == 'wxweb':  # web登录
             return get_wxweb_openid(attrs['code'])
         else:
             raise serializers.ValidationError('type 参数错误')

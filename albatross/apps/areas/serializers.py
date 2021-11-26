@@ -3,6 +3,9 @@ from . import models
 
 
 class AreaInfoSer(serializers.ModelSerializer):
+    """
+    省市区信息序列化
+    """
     class Meta:
         model = models.Areas
         fields = ('id', 'name')

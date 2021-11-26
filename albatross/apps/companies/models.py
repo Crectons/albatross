@@ -4,11 +4,14 @@ from albatross.utils.SoftDelete import SoftDeleteModel
 
 
 class CompanyInfo(SoftDeleteModel):
+    """
+    公司信息
+    """
 
-    cid = models.AutoField(primary_key=True)
+    cid = models.AutoField(primary_key=True)  # 公司 ID
 
-    company_name = models.TextField(default='')  # 公司名称
-    company_info = models.TextField(default='')  # 公司信息
+    company_name = models.TextField(default='', verbose_name='公司名称')  # 公司名称
+    company_info = models.TextField(default='', verbose_name='公司详细信息')  # 公司详细信息
 
     def __str__(self):
         return f'{self.cid}-{self.company_name}'
