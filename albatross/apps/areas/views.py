@@ -1,3 +1,4 @@
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import *
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
@@ -6,6 +7,7 @@ from .models import *
 
 
 class AreasInfoView(ReadOnlyModelViewSet, CacheResponseMixin):
+    permission_classes = [AllowAny]
     """提供省市区三级联动数据"""
 
     # 禁用分页

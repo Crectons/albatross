@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AreaConfig(AppConfig):
+class AuthConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'areas'
+    name = 'oauth'

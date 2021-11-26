@@ -1,16 +1,19 @@
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 from albatross.utils.SoftDelete import SoftDeleteModel
 from albatross.utils.choices import GenderChoice
 from albatross.utils.choices import EducationChoice
 
 
-class UserInfo(SoftDeleteModel):
+class UserInfo(SoftDeleteModel, AbstractBaseUser):
     """
     用户信息
     """
 
     uid = models.AutoField(primary_key=True, verbose_name='用户ID')
+    password = None
 
     # 微信相关个人信息
     province = models.TextField(default='', verbose_name='省份')
@@ -41,7 +44,10 @@ class UserInfo(SoftDeleteModel):
     personal_experience = models.TextField(default='', verbose_name='个人经历')  # 个人经历
     self_evaluate = models.TextField(default='', verbose_name='自我评价')  # 自我评价
 
-    intention = models.ManyToManyField('recruits.PostTree', verbose_name='求职意向', default=None, blank=True)
+    intention = models.ManyToManyField('recruits.PostTree', verbose_name='求职意向', default=None, blank=True,
+                                       related_name='intention')
+
+    is_active = models.BooleanField(default=False, verbose_name='是否激活')  # 是否激活
 
     def __str__(self):
         return f'{self.uid}: {self.name}'

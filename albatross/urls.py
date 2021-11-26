@@ -16,23 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
-from rest_framework.documentation import include_docs_urls
 from rest_framework import routers
 
-from albatross.apps.users import views as user_views
-from albatross.apps.recruits import views as recruit_views
-from albatross.apps.companies import views as company_views
+from users import views as user_views
+from recruits import views as recruit_views
+from companies import views as company_views
 
 urlpatterns = [
-    url(r'docs/', include_docs_urls(title='接口文档')),
-    path(r'area/', include('albatross.apps.areas.urls')),
-    path('admin/', admin.site.urls),
+    path(r'area/', include('areas.urls')),  # 省市区获取接口
+    path('admin/', admin.site.urls),  # admin 后台管理
+    path('token/', include('oauth.urls')),  # openid 登录
 ]
 
 router = routers.DefaultRouter()
-router.register(r'user', user_views.UserInfoViewSet)
-router.register(r'post', recruit_views.PostInfoViewSet)
-router.register(r'classification', recruit_views.PostTreeViewSet)
-router.register(r'company', company_views.CompanyInfoViewSet)
+router.register(r'user', user_views.UserInfoViewSet)  # 用户信息
+router.register(r'post', recruit_views.PostInfoViewSet)  # 招聘信息
+router.register(r'classification', recruit_views.PostTreeViewSet)  # 岗位分类
+router.register(r'company', company_views.CompanyInfoViewSet)  # 公司信息
 
 urlpatterns += router.urls

@@ -122,7 +122,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'zh-hans'
+# LANGUAGE_CODE = 'zh-hans'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -210,13 +211,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema',
     # 自定义异常捕获
-    # 'EXCEPTION_HANDLER': 'albatross.utils.Exception.exception_handler',
+    'EXCEPTION_HANDLER': 'albatross.utils.exceptions.exception_handler',
     # 过滤后端
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     # 分页
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,  # 默认每页数目
     'PAGE_SIZE_QUERY_PARAM': 'page_size',  # 控制每页数目的参数
+    # 认证配置
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    # 全局认证 优先级高于试图类中的配置 login view中，进行用户验证时
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'oauth.auth.OpenIdJWTAuthentication',
+    ],
 }
 
 # DRF扩展
@@ -225,4 +234,14 @@ REST_FRAMEWORK_EXTENSIONS = {
     'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 60,
     # 缓存存储
     'DEFAULT_USE_CACHE': 'default',
+}
+
+# JWT 配置
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'ALGORITHM': 'HS256',
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'uid',
 }

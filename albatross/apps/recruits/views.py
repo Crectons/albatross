@@ -1,3 +1,4 @@
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -9,6 +10,7 @@ from .serializers import PostInfoSerializer, PostTreeSerializer
 class PostInfoViewSet(ModelViewSet):
     queryset = PostInfo.objects.all().order_by('pid')
     serializer_class = PostInfoSerializer
+    permission_classes = [AllowAny]
 
 
 class PostTreeViewSet(ModelViewSet):
@@ -16,6 +18,7 @@ class PostTreeViewSet(ModelViewSet):
     serializer_class = PostTreeSerializer
     filter_fields = ('id', 'type', 'name')
     pagination_class = None
+    permission_classes = [AllowAny]
 
     @action(methods=['get'], detail=False)
     def tree(self, request):

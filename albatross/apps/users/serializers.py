@@ -9,8 +9,9 @@ class UserInfoSerializer(ModelSerializer):
     """
     class Meta:
         model = UserInfo
-        fields = '__all__'
+        exclude = ['is_deleted']
 
+    # # intention 返回 str
     # intention = SerializerMethodField()
     #
     # def get_intention(self, obj):

@@ -12,7 +12,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'albatross.settings.dev'
 
 django.setup()
 
-from albatross.apps.recruits.models import PostTree
+from recruits.models import PostTree
 
 data = {
     "创意/设计": {
