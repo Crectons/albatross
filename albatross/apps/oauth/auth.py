@@ -1,3 +1,4 @@
+# 重写 jwt 相关验证类
 import rest_framework_simplejwt.settings
 from django.contrib.auth.backends import BaseBackend
 from rest_framework_simplejwt.exceptions import AuthenticationFailed, InvalidToken
