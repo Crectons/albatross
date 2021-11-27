@@ -9,7 +9,7 @@ class UserInfoSerializer(ModelSerializer):
     """
     class Meta:
         model = UserInfo
-        exclude = ['is_deleted']
+        exclude = ['is_deleted', 'last_login', 'openid']
 
     # 目前无需返回岗位分类字符串，建议前端预先存储posttree的dict字典便于后续操作
     # # intention 返回 str

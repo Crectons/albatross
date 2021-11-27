@@ -9,7 +9,10 @@ class PostTreeSerializer(ModelSerializer):
     """
     class Meta:
         model = PostTree
-        exclude = ['father']
+        fields = '__all__'
+        extra_kwargs = {
+            'father': {'write_only': True},
+        }
 
 
 class PostTreeDetailSerializer(ModelSerializer):
@@ -20,7 +23,10 @@ class PostTreeDetailSerializer(ModelSerializer):
 
     class Meta:
         model = PostTree
-        exclude = ['father']
+        fields = '__all__'
+        extra_kwargs = {
+            'father': {'write_only': True},
+        }
 
 
 class PostInfoSerializer(ModelSerializer):
