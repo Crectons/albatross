@@ -5,7 +5,7 @@ from rest_framework import routers
 
 router = routers.SimpleRouter()
 
-router.register(r'', AreasInfoView, basename='info')
+router.register(r'', AreasInfoView, basename='areas')
 
 urlpatterns = [
     url(r'', include(router.urls)),  # 省市区三级信息获取

@@ -31,7 +31,7 @@ urlpatterns = [
 router = routers.DefaultRouter()
 router.register(r'user', user_views.UserInfoViewSet)  # 用户信息
 router.register(r'post', recruit_views.PostInfoViewSet)  # 招聘信息
-router.register(r'classification', recruit_views.PostTreeViewSet)  # 岗位分类
+router.register(r'posttree', recruit_views.PostTreeViewSet, basename='posttree')  # 岗位分类
 router.register(r'company', company_views.CompanyInfoViewSet)  # 公司信息
 
 urlpatterns += router.urls

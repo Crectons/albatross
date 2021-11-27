@@ -9,7 +9,18 @@ class PostTreeSerializer(ModelSerializer):
     """
     class Meta:
         model = PostTree
-        fields = '__all__'
+        exclude = ['father']
+
+
+class PostTreeDetailSerializer(ModelSerializer):
+    """
+    岗位分类嵌套序列化器
+    """
+    children = PostTreeSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = PostTree
+        exclude = ['father']
 
 
 class PostInfoSerializer(ModelSerializer):

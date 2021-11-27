@@ -2,9 +2,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 from .models import PostInfo, PostTree
-from .serializers import PostInfoSerializer, PostTreeSerializer
+from .serializers import PostInfoSerializer, PostTreeSerializer, PostTreeDetailSerializer
 
 
 class PostInfoViewSet(ModelViewSet):
@@ -16,15 +17,35 @@ class PostInfoViewSet(ModelViewSet):
     permission_classes = [AllowAny]  # 允许任何人访问 TODO:权限控制
 
 
-class PostTreeViewSet(ModelViewSet):
+class PostTreeViewSet(ModelViewSet, CacheResponseMixin):
     """
     岗位分类视图
     """
-    queryset = PostTree.objects.all().order_by('id')  # 获取 id 排序的查询集
-    serializer_class = PostTreeSerializer
+    # queryset = PostTree.objects.all().order_by('id')  # 获取 id 排序的查询集
+    # serializer_class = PostTreeSerializer
     filter_fields = ('id', 'type', 'name')
     pagination_class = None  # 关闭分页
     permission_classes = [AllowAny]  # 允许任何人访问
+
+    # 指定要输出的数据来自哪个查询集
+    def get_queryset(self):
+        """
+        根据请求的行为，过滤不同的行为对应的序列化器需要的数据
+        """
+        if self.action == 'list':
+            return PostTree.objects.filter(father=None)  # 只有当 pid=None 返回的是省级数据
+        else:
+            return PostTree.objects.all()
+
+    # 指定序列化器
+    def get_serializer_class(self):
+        """
+        根据请求的行为，指定不同的序列化器
+        """
+        if self.action == 'list':
+            return PostTreeSerializer
+        else:
+            return PostTreeDetailSerializer
 
     @action(methods=['get'], detail=False)
     def tree(self, request):
