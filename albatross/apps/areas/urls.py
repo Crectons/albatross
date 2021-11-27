@@ -3,9 +3,9 @@ from .views import *
 from rest_framework import routers
 
 
-router = routers.DefaultRouter()
+router = routers.SimpleRouter()
 
-router.register(r'info', AreasInfoView, basename='info')
+router.register(r'', AreasInfoView, basename='info')
 
 urlpatterns = [
     url(r'', include(router.urls)),  # 省市区三级信息获取
