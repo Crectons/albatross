@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
+from .filters import PostTreeFilter
 from .models import PostInfo, PostTree
 from .serializers import PostInfoSerializer, PostTreeSerializer, PostTreeDetailSerializer
 
@@ -21,9 +22,7 @@ class PostTreeViewSet(ModelViewSet, CacheResponseMixin):
     """
     岗位分类视图
     """
-    # queryset = PostTree.objects.all().order_by('id')  # 获取 id 排序的查询集
-    # serializer_class = PostTreeSerializer
-    filter_fields = ('id', 'type', 'name')
+    filterset_class = PostTreeFilter  # 自定义过滤器
     pagination_class = None  # 关闭分页
     permission_classes = [AllowAny]  # 允许任何人访问
 
@@ -46,6 +45,18 @@ class PostTreeViewSet(ModelViewSet, CacheResponseMixin):
             return PostTreeSerializer
         else:
             return PostTreeDetailSerializer
+
+    @action(methods=['get'], detail=False)
+    def all(self, request):
+        queryset = self.filter_queryset(PostTree.objects.all())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = PostTreeSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = PostTreeSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     @action(methods=['get'], detail=False)
     def tree(self, request):

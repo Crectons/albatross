@@ -1,7 +1,10 @@
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from rest_framework.viewsets import *
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
+from .filters import AreaFilter
 from .serializers import *
 from .models import *
 
@@ -10,6 +13,7 @@ class AreasInfoView(ReadOnlyModelViewSet, CacheResponseMixin):
     """
     提供省市区三级联动数据
     """
+    filterst_class = AreaFilter  # 过滤器
     permission_classes = [AllowAny]  # 任何人可访问
     pagination_class = None  # 禁用分页
 
@@ -34,3 +38,15 @@ class AreasInfoView(ReadOnlyModelViewSet, CacheResponseMixin):
             return AreaInfoSer
         else:
             return NextAreasInfoSer
+
+    @action(methods=['get'], detail=False)
+    def all(self, request):
+        queryset = self.filter_queryset(Areas.objects.all())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = AreaInfoSer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = AreaInfoSer(queryset, many=True)
+        return Response(serializer.data)
