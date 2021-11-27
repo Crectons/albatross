@@ -1,6 +1,7 @@
 # 重写 jwt 相关验证类
 import rest_framework_simplejwt.settings
 from django.contrib.auth.backends import BaseBackend
+from rest_framework.exceptions import PermissionDenied
 from rest_framework_simplejwt.exceptions import AuthenticationFailed, InvalidToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -78,7 +79,23 @@ class OpenIdJWTAuthentication(JWTAuthentication):
         except self.user_model.DoesNotExist:
             raise AuthenticationFailed('User not found', code='user_not_found')  # 用户不存在, 认证失败
 
+        self.check_activate(user)  # 检查用户激活类型
+
+        return user
+
+    @staticmethod
+    def check_activate(user):
+        """
+        检查是否激活
+        """
         if not user.is_active:
             raise AuthenticationFailed('User is inactive', code='user_inactive')  # 用户未激活, 认证失败
 
-        return user
+
+class UserActiveAuthentication(OpenIdJWTAuthentication):
+    """
+    用于用户激活时的认证类
+    """
+    @staticmethod
+    def check_activate(user):
+        pass

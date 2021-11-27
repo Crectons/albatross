@@ -26,10 +26,15 @@ urlpatterns = [
     path(r'area/', include('areas.urls')),  # 省市区获取接口
     path('admin/', admin.site.urls),  # admin 后台管理
     path('token/', include('oauth.urls')),  # openid 登录
+    path('user/', user_views.UserInfoViewSet.as_view({
+        "get": "retrieve",
+        "put": "update",
+        "patch": "partial_update",
+        "delete": "destroy"
+    })),  # 用户信息
 ]
 
 router = routers.DefaultRouter()
-router.register(r'user', user_views.UserInfoViewSet)  # 用户信息
 router.register(r'post', recruit_views.PostInfoViewSet)  # 招聘信息
 router.register(r'posttree', recruit_views.PostTreeViewSet, basename='posttree')  # 岗位分类(视图中未直接指定查询集，此处需要指定basename)
 router.register(r'company', company_views.CompanyInfoViewSet)  # 公司信息

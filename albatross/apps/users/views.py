@@ -1,39 +1,61 @@
 import logging
 
-from rest_framework.exceptions import PermissionDenied
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied, NotFound
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework import mixins
+from rest_framework import mixins, status
 
+from oauth.auth import UserActiveAuthentication
 from .models import UserInfo
 from .serializers import UserInfoSerializer, UserIntentionSerializer
 
 logger = logging.getLogger(__name__)
 
 
-class UserInfoViewSet(mixins.CreateModelMixin,
-                      mixins.RetrieveModelMixin,
-                      mixins.UpdateModelMixin,
-                      mixins.DestroyModelMixin,
-                      GenericViewSet):  # 取消 ListModelMixin，阻止列表查询
+class UserInfoViewSet(RetrieveModelMixin,
+                      UpdateModelMixin,
+                      DestroyModelMixin,
+                      GenericViewSet):
     """
-    用户信息视图
+    用户信息视图, 该接口不属于rest风格
     """
-    queryset = UserInfo.objects.all().order_by('uid')  # 按照uid排序
+    queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
+    authentication_classes = [UserActiveAuthentication]  # 不检测是否激活
     permission_classes = [IsAuthenticated]  # 仅登录用户可访问个人信息
 
-    def retrieve(self, request, *args, **kwargs):
+    def get_object(self):
         """
-        重写 retrieve 方法，鉴定用户是否为本人
+        重写对象获取逻辑，获取当前登录用户的信息
         """
-        if kwargs.get('pk') != str(request.user.uid):
-            raise PermissionDenied()  # 权限不足
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+        obj = self.get_queryset().get(uid=self.request.user.uid)  # 从jwt鉴权中获取当前登录用户的uid
+        if obj is None:
+            raise NotFound('User not found', code='user_not_found')
 
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        """
+        重写update逻辑，增加自动用户激活
+        """
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        if not instance.is_active and request.data != {}:  # 该用户未激活且传入数据不为空
+            instance.is_active = True  # 激活该用户
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
 class UserIntentionViewSet(ModelViewSet):  # TODO: 求职意向返回待完善
     """
