@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 
     'django_filters',
     'rest_framework',
+    'corsheaders',  # 跨域请求处理
 
     'users',
     'recruits',
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # CORS 跨域(最外层)
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -245,3 +247,10 @@ SIMPLE_JWT = {
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'uid',
 }
+
+# CORS
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:*',
+    'http://localhost:*',
+)
+CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
