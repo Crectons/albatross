@@ -8,3 +8,6 @@ requests==2.26.0
 simplejson==3.17.5
 six==1.12.0
 xmltodict==0.12.0
+
+django-filter~=21.1
+pillow~=8.4.0
