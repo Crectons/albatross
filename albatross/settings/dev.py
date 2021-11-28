@@ -254,3 +254,9 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:*',
 )
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
+
+# 媒体文件
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
+AVATAR_BASE_WIDTH = 400
+

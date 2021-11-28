@@ -1,10 +1,12 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+
 
 from albatross.utils.SoftDelete import SoftDeleteModel
 from albatross.utils.choices import GenderChoice
 from albatross.utils.choices import EducationChoice
+from albatross.utils.storage import AvatarStorage
+from areas.models import Areas
 
 
 class UserInfo(SoftDeleteModel, AbstractBaseUser):
@@ -16,11 +18,13 @@ class UserInfo(SoftDeleteModel, AbstractBaseUser):
     password = None  # 无需 password 字段
 
     # 微信相关个人信息 TODO: 待完善具体信息
-    province = models.TextField(default='', verbose_name='省份')
-    city = models.TextField(default='', verbose_name='城市')
-    session_key = models.TextField(default='')
-    avatar = models.ImageField(upload_to='avatar', default='', verbose_name='头像')
-    openid = models.TextField(default='')
+    province = models.ForeignKey(to=Areas, on_delete=models.CASCADE, verbose_name='省份', blank=True, null=True,
+                                 related_name='province')
+    city = models.ForeignKey(to=Areas, on_delete=models.CASCADE, verbose_name='城市', blank=True, null=True,
+                             related_name='city')
+    avatar = models.ImageField(upload_to='avatar', default='avatar/default.jpg', verbose_name='头像',
+                               storage=AvatarStorage)
+    openid = models.CharField(max_length=50, default='')
 
     # 个人基本信息
     name = models.CharField(max_length=16, default='', verbose_name='姓名')  # 姓名

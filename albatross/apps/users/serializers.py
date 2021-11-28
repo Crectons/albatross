@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from .models import UserInfo
@@ -9,18 +10,27 @@ class UserInfoSerializer(ModelSerializer):
     """
     class Meta:
         model = UserInfo
-        exclude = ['is_deleted', 'last_login', 'openid']
+        exclude = ['is_deleted', 'last_login', 'openid', 'intention', 'is_active']
 
-    # 目前无需返回岗位分类字符串，建议前端预先存储posttree的dict字典便于后续操作
-    # # intention 返回 str
-    # intention = SerializerMethodField()
-    #
-    # def get_intention(self, obj):
-    #     tags_list = []
-    #     tags = obj.intention.all()
-    #     for tag in tags:
-    #         tags_list.append(tag.name)
-    #     return tags_list
+    def validate_avatar(self, value):
+        """
+        头像检测
+        """
+        if not value:  # 未找到头像文件
+            return 'media/avatar/default.jpg'
+
+        if value.content_type not in ['image/jpeg', 'image/png', 'image/gif']:  # 文件类型不正确
+            raise serializers.ValidationError(detail='Avatar is not a image', code='avatar_not_image')
+
+        if value.size > 1024 * 1024 * 2:  # 头像文件大于2M
+            raise serializers.ValidationError(detail='Avatar is larger than 2MB', code='avatar_too_large')
+        if value.size < 1024:  # 头像文件小于1KB
+            raise serializers.ValidationError(detail='Avatar is smaller than 1KB', code='avatar_too_small')
+
+        if self.instance.avatar != 'media/avatar/default.jpg':  # 已存在头像文件
+            self.instance.avatar.delete()  # 删除原头像文件
+
+        return value
 
 
 class UserIntentionSerializer(ModelSerializer):

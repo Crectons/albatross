@@ -18,6 +18,8 @@ class PostInfoViewSet(ModelViewSet):
     serializer_class = PostInfoSerializer
     permission_classes = [AllowAny]  # 允许任何人访问 TODO:权限控制
 
+    # TODO:完善
+
 
 class PostTreeViewSet(ModelViewSet, CacheResponseMixin):
     """

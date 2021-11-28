@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 from rest_framework import routers
+from django.views.static import serve
+from django.conf import settings
 
 from users import views as user_views
 from recruits import views as recruit_views
@@ -32,6 +34,7 @@ urlpatterns = [
         "patch": "partial_update",
         "delete": "destroy"
     })),  # 用户信息
+    url(r'^media/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
 router = routers.DefaultRouter()
