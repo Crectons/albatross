@@ -14,7 +14,7 @@ class CompanyInfo(SoftDeleteModel):
     info = models.TextField(default='', verbose_name='公司详细信息')  # 公司详细信息
 
     def __str__(self):
-        return f'{self.cid}-{self.name}'
+        return f'{self.name}'
 
     def __repr__(self):
         return f'{self.name}'

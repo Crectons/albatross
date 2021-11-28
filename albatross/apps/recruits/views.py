@@ -1,13 +1,15 @@
 from rest_framework import status
+from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
-from .filters import PostTreeFilter
+from .filters import PostTreeFilter, PostInfoFilter
 from .models import PostInfo, PostTree
-from .serializers import PostInfoSerializer, PostTreeSerializer, PostTreeDetailSerializer
+from .serializers import PostInfoListSerializer, PostInfoDetailSerializer, PostInfoCreateSerializer
+from .serializers import PostTreeSerializer, PostTreeDetailSerializer
 
 
 class PostInfoViewSet(ModelViewSet):
@@ -15,10 +17,23 @@ class PostInfoViewSet(ModelViewSet):
     岗位信息视图
     """
     queryset = PostInfo.objects.all().order_by('pid')  # 获取 pid 排序的查询集，便于分页
-    serializer_class = PostInfoSerializer
+    serializer_class = PostInfoListSerializer
     permission_classes = [AllowAny]  # 允许任何人访问 TODO:权限控制
+    filterset_class = PostInfoFilter
+    # # 排序
+    # filter_backends = [OrderingFilter]
+    # ordering_fields += ['pid', 'recommend', 'salary_max', 'salary_min', 'update_time']
 
-    # TODO:完善
+    def get_serializer_class(self):
+        """
+        获取序列化器类
+        """
+        if self.action == 'list':
+            return PostInfoListSerializer
+        if self.action == 'retrieve':
+            return PostInfoDetailSerializer
+        return PostInfoCreateSerializer
+
 
 
 class PostTreeViewSet(ModelViewSet, CacheResponseMixin):

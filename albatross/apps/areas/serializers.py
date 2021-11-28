@@ -23,4 +23,3 @@ class NextAreasInfoSer(serializers.ModelSerializer):
     class Meta:
         model = models.Areas
         fields = ('id', 'name', 'addinfo')
-

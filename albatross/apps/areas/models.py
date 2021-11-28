@@ -5,12 +5,13 @@ class Areas(models.Model):
     """
     省市区数据
     """
-    name = models.CharField(max_length=50, verbose_name='地名')
     pid = models.ForeignKey('self', verbose_name='父级的行政区域id', on_delete=models.SET_NULL, related_name='addinfo',
                             null=True, blank=True)
+    name = models.CharField(max_length=50, verbose_name='地名')
+    display = models.CharField(max_length=150, verbose_name='显示名称')
 
     def __str__(self):
-        return self.name
+        return self.display
 
     class Meta:
         app_label = 'areas'

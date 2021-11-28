@@ -49,7 +49,8 @@ class PostInfo(SoftDeleteModel):
                                 verbose_name='公司')
     location = models.ForeignKey('areas.Areas', on_delete=models.SET_NULL, null=True, blank=True, verbose_name='办公地点')
 
-    score = models.IntegerField(default=0, verbose_name='岗位评分')
+    recommend = models.IntegerField(default=0, verbose_name='推荐指数')  # 推荐指数
+    priority = models.BooleanField(default=False, verbose_name='优先推荐')  # 优先推荐
 
     def __str__(self):
         return f'{self.pid}: {self.post_name}-{self.company}'
