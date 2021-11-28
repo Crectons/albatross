@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from .models import PostTree, PostInfo
-from companies.serializers import CompanyInfoSerializer
+from companies.serializers import CompanyInfoDetailSerializer
 
 
 class PostTreeSerializer(ModelSerializer):
@@ -52,6 +52,8 @@ class PostInfoDetailSerializer(PostInfoListSerializer):
     class Meta:
         model = PostInfo
         exclude = ['is_deleted']
+
+    company = CompanyInfoDetailSerializer(label='公司名称', read_only=True)
 
 
 class PostInfoCreateSerializer(ModelSerializer):
