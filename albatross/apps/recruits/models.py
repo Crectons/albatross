@@ -37,10 +37,10 @@ class PostInfo(SoftDeleteModel):
     node_3 = models.ForeignKey(PostTree, on_delete=models.CASCADE, null=True, blank=True, verbose_name='三级岗位',
                                related_name='node_3_related')  # 三级岗位
     post_name = models.CharField(max_length=100, default='', verbose_name='岗位名称')  # 岗位名称
-    salary_low = models.IntegerField(default=0, verbose_name='薪资下限')
-    salary_high = models.IntegerField(default=0, verbose_name='薪资上限')
+    salary_min = models.IntegerField(default=0, verbose_name='薪资下限')
+    salary_max = models.IntegerField(default=0, verbose_name='薪资上限')
     salary_type = models.IntegerField(choices=SalaryTypeChoice.choices, default=0, verbose_name='薪资类型')
-    education = models.IntegerField(choices=EducationChoice.choices, default=EducationChoice.ALL, verbose_name='学历要求')  # 岗位学历要求
+    requirement = models.IntegerField(choices=EducationChoice.choices, default=EducationChoice.ALL, verbose_name='学历要求')  # 岗位学历要求
     experience = models.CharField(max_length=100, default='', verbose_name='工作经验')  # 工作经验
     description = models.TextField(default='', verbose_name='岗位介绍')  # 岗位介绍
     welfare = models.TextField(default='', verbose_name='福利')  # 福利

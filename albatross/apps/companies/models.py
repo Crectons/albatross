@@ -10,11 +10,14 @@ class CompanyInfo(SoftDeleteModel):
 
     cid = models.AutoField(primary_key=True)  # 公司 ID
 
-    company_name = models.TextField(default='', verbose_name='公司名称')  # 公司名称
-    company_info = models.TextField(default='', verbose_name='公司详细信息')  # 公司详细信息
+    name = models.CharField(max_length=100, unique=True, verbose_name='公司名称')  # 公司名称
+    info = models.TextField(default='', verbose_name='公司详细信息')  # 公司详细信息
 
     def __str__(self):
-        return f'{self.cid}-{self.company_name}'
+        return f'{self.cid}-{self.name}'
+
+    def __repr__(self):
+        return f'{self.name}'
 
     class Meta:
         app_label = 'companies'
