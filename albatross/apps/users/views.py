@@ -6,15 +6,20 @@ from rest_framework.mixins import DestroyModelMixin, RetrieveModelMixin, UpdateM
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework_extensions.mixins import NestedViewSetMixin
 
+from albatross.utils.permissions import CurrentUser
 from oauth.auth import UserActiveAuthentication
+from recruits.models import PostResume
+from recruits.serializers import PostResumeSerializer
 from .models import UserInfo, UserIntention
 from .serializers import UserInfoSerializer, UserIntentionSerializer
 
 logger = logging.getLogger(__name__)
 
 
-class UserInfoViewSet(RetrieveModelMixin,
+class UserInfoViewSet(NestedViewSetMixin,
+                      RetrieveModelMixin,
                       UpdateModelMixin,
                       DestroyModelMixin,
                       GenericViewSet):
@@ -24,19 +29,8 @@ class UserInfoViewSet(RetrieveModelMixin,
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
     authentication_classes = [UserActiveAuthentication]  # 不检测是否激活
-    permission_classes = [IsAuthenticated]  # 仅登录用户可访问个人信息
+    permission_classes = [CurrentUser]  # 仅自己可访问个人信息
     # permission_classes = [AllowAny]  # 测试使用
-
-    def get_object(self):
-        """
-        重写对象获取逻辑，获取当前登录用户的信息
-        """
-        obj = self.get_queryset().get(uid=self.request.user.uid)  # 从jwt鉴权中获取当前登录用户的uid
-        # obj = self.get_queryset().get(uid=2)  # 测试使用
-        if obj is None:
-            raise NotFound('User not found', code='user_not_found')
-
-        return obj
 
     def update(self, request, *args, **kwargs):
         """
@@ -59,10 +53,19 @@ class UserInfoViewSet(RetrieveModelMixin,
         return Response(serializer.data)
 
 
-class UserIntentionViewSet(ModelViewSet):  # TODO: 求职意向返回待完善
+class UserIntentionViewSet(NestedViewSetMixin, ModelViewSet):
     """
     用户意向视图
     """
     queryset = UserIntention.objects.all()
     serializer_class = UserIntentionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [CurrentUser]
+
+
+class UserPostResumeViewSet(NestedViewSetMixin, ModelViewSet):
+    """
+    用户投递简历视图
+    """
+    queryset = PostResume.objects.all()
+    serializer_class = PostResumeSerializer
+    permission_classes = [CurrentUser]

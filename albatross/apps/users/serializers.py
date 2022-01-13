@@ -8,7 +8,7 @@ from recruits.serializers import PostTreeSerializer
 from .models import UserInfo, UserIntention
 
 
-class UserInfoSerializer(NestedViewSetMixin, ModelSerializer):
+class UserInfoSerializer(ModelSerializer):
     """
     用户信息序列化器（所有信息）
     """
@@ -37,7 +37,7 @@ class UserInfoSerializer(NestedViewSetMixin, ModelSerializer):
         return value
 
 
-class UserIntentionSerializer(NestedViewSetMixin, ModelSerializer):
+class UserIntentionSerializer(ModelSerializer):
     """
     用户求职意向序列化器
     """

@@ -9,9 +9,15 @@ urlpatterns = [
 
 ]
 
-(router.register(r'users', views.UserInfoViewSet, basename='user_info')
+(router.register(r'users', views.UserInfoViewSet, basename='user')
  .register(r'intentions', views.UserIntentionViewSet, basename='user_intentions',
-           parents_query_lookups=['user_info']
+           parents_query_lookups=['user']
+           )
+ )
+
+(router.register(r'users', views.UserInfoViewSet, basename='user')
+ .register(r'resumes', views.UserPostResumeViewSet, basename='user_resumes',
+           parents_query_lookups=['user']
            )
  )
 
