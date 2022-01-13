@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 
 
-from albatross.utils.SoftDelete import SoftDeleteModel
+from albatross.utils.models import SoftDeleteModel
 from albatross.utils.choices import GenderChoice
 from albatross.utils.choices import EducationChoice
 from albatross.utils.storage import AvatarStorage

@@ -1,6 +1,6 @@
 from django.db import models
 
-from albatross.utils.SoftDelete import SoftDeleteModel
+from albatross.utils.models import SoftDeleteModel
 
 
 class CompanyInfo(SoftDeleteModel):

@@ -1,7 +1,7 @@
 from django.db import models
 
 from albatross.utils.choices import EducationChoice, ClassificationChoice, SalaryTypeChoice
-from albatross.utils.SoftDelete import SoftDeleteModel
+from albatross.utils.models import SoftDeleteModel
 
 
 class PostTree(models.Model):
@@ -39,7 +39,6 @@ class PostInfo(SoftDeleteModel):
     post_name = models.CharField(max_length=100, default='', verbose_name='岗位名称')  # 岗位名称
     salary_min = models.IntegerField(default=0, verbose_name='薪资下限')
     salary_max = models.IntegerField(default=0, verbose_name='薪资上限')
-    salary_type = models.IntegerField(choices=SalaryTypeChoice.choices, default=0, verbose_name='薪资类型')
     requirement = models.IntegerField(choices=EducationChoice.choices, default=EducationChoice.ALL, verbose_name='学历要求')  # 岗位学历要求
     experience = models.CharField(max_length=100, default='', verbose_name='工作经验')  # 工作经验
     description = models.TextField(default='', verbose_name='岗位介绍')  # 岗位介绍
