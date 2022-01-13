@@ -55,6 +55,8 @@ class OpenIDTokenObtainPairSerializer(serializers.Serializer):
         data[USER_ID_FIELD] = str(getattr(user, USER_ID_FIELD))  # 返回用户id
         data['access'] = str(refresh.access_token)  # 返回 access token
         data['refresh'] = str(refresh)  # 返回 refresh token
+        data['name'] = user.name
+        data['avatar'] = self.context['request'].build_absolute_uri(user.avatar.url)
         data['is_active'] = user.is_active  # 返回用户激活状态
 
         return data
