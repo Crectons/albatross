@@ -67,6 +67,13 @@ class PostInfoCreateSerializer(ModelSerializer):
 
 
 class PostResumeSerializer(ModelSerializer):
+    status = serializers.SerializerMethodField(label='状态')
+    post = PostInfoListSerializer(label='岗位信息', read_only=True)
+
+    def get_status(self, obj):
+        return obj.get_status_display()
+
+
     class Meta:
         model = PostResume
-        fields = '__all__'
+        exclude = ['user']
