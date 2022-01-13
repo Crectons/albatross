@@ -1,10 +1,13 @@
 from rest_framework import serializers
+from rest_framework.exceptions import NotAuthenticated
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework_extensions.mixins import NestedViewSetMixin
 
-from .models import UserInfo
+from areas.models import Areas
+from .models import UserInfo, UserIntention
 
 
-class UserInfoSerializer(ModelSerializer):
+class UserInfoSerializer(NestedViewSetMixin, ModelSerializer):
     """
     用户信息序列化器（所有信息）
     """
@@ -33,11 +36,34 @@ class UserInfoSerializer(ModelSerializer):
         return value
 
 
-class UserIntentionSerializer(ModelSerializer):
+class UserIntentionSerializer(NestedViewSetMixin, ModelSerializer):
     """
     用户求职意向序列化器
     """
+    city_str = serializers.CharField(source='city', label='城市')
+
+    def validate_city_str(self, value):
+        """
+        城市字符串转换
+        """
+        if value:
+            try:
+                city = Areas.objects.get(name=value.split('-')[-1])
+            except Areas.DoesNotExist:
+                raise serializers.ValidationError(detail='城市不存在', code='city_not_exist')
+            return city
+        return None
+
+    def validate(self, attrs):
+        """
+        添加 user
+        """
+        # 添加 user
+        if self.context['request'].user.is_anonymous:
+            raise NotAuthenticated('用户未登录')
+        attrs['user'] = self.context['request'].user
+        return attrs
 
     class Meta:
-        model = UserInfo
-        fields = '__all__'
+        model = UserIntention
+        exclude = ['user']

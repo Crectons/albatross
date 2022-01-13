@@ -64,10 +64,14 @@ class UserIntention(models.Model):
     """
     用户意向
     """
-    user = models.ForeignKey(to=UserInfo, on_delete=models.CASCADE, verbose_name='用户')
+    user = models.ForeignKey(to=UserInfo, related_name='intention', on_delete=models.CASCADE, verbose_name='用户')
     post = models.ForeignKey(to='recruits.PostTree', on_delete=models.CASCADE, verbose_name='岗位分类')
     salary = models.IntegerField(default=0, verbose_name='薪资')
-    city = models.ForeignKey(to=Areas, on_delete=models.CASCADE, verbose_name='城市')
+    city = models.ForeignKey(to=Areas, on_delete=models.CASCADE, null=True, blank=True, verbose_name='城市')
+    language = models.CharField(max_length=100, default='', verbose_name='语言')
+    platform = models.CharField(max_length=100, default='', verbose_name='平台')
+    working_type = models.CharField(max_length=100, default='', verbose_name='工作类型')
+    area = models.CharField(max_length=100, default='', verbose_name='地区')
 
     class Meta:
         app_label = 'users'
