@@ -44,8 +44,12 @@ class PostInfoListSerializer(ModelSerializer):
     node_1 = serializers.StringRelatedField(label='一级分类', read_only=True)
     node_2 = serializers.StringRelatedField(label='二级分类', read_only=True)
     node_3 = serializers.StringRelatedField(label='三级分类', read_only=True)
+    requirement = serializers.SerializerMethodField(label='学历要求')
 
     location = serializers.StringRelatedField(label='地区', read_only=True)
+
+    def get_requirement(self, obj):
+        return obj.get_requirement_display()
 
 
 class PostInfoDetailSerializer(PostInfoListSerializer):
