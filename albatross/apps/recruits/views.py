@@ -12,7 +12,7 @@ from .filters import PostTreeFilter, PostInfoFilter
 from .models import PostInfo, PostTree, PostResume
 from .serializers import PostInfoListSerializer, PostInfoDetailSerializer, PostInfoCreateSerializer, \
     PostResumeSerializer
-from .serializers import PostTreeSerializer, PostTreeDetailSerializer
+from .serializers import PostTreeSerializer, PostTreeNestedSerializer
 
 
 class PostInfoViewSet(ModelViewSet):
@@ -78,7 +78,7 @@ class PostTreeViewSet(ModelViewSet, CacheResponseMixin):
         if self.action == 'list':
             return PostTreeSerializer
         else:
-            return PostTreeDetailSerializer
+            return PostTreeNestedSerializer
 
     @action(methods=['get'], detail=False)
     def all(self, request):

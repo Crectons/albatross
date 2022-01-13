@@ -4,6 +4,7 @@ from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from rest_framework_extensions.mixins import NestedViewSetMixin
 
 from areas.models import Areas
+from recruits.serializers import PostTreeSerializer
 from .models import UserInfo, UserIntention
 
 
@@ -41,6 +42,7 @@ class UserIntentionSerializer(NestedViewSetMixin, ModelSerializer):
     用户求职意向序列化器
     """
     city_str = serializers.CharField(source='city', label='城市')
+    post_str = serializers.StringRelatedField(source='post', label='岗位', read_only=True)
 
     def validate_city_str(self, value):
         """

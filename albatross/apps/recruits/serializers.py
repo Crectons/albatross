@@ -17,7 +17,7 @@ class PostTreeSerializer(ModelSerializer):
         }
 
 
-class PostTreeDetailSerializer(ModelSerializer):
+class PostTreeNestedSerializer(ModelSerializer):
     """
     岗位分类嵌套序列化器
     """
