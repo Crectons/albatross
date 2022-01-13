@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from oauth.auth import UserActiveAuthentication
-from .models import UserInfo
+from .models import UserInfo, UserIntention
 from .serializers import UserInfoSerializer, UserIntentionSerializer
 
 logger = logging.getLogger(__name__)
@@ -63,6 +63,6 @@ class UserIntentionViewSet(ModelViewSet):  # TODO: 求职意向返回待完善
     """
     用户意向视图
     """
-    queryset = UserInfo.objects.all()
+    queryset = UserIntention.objects.all()
     serializer_class = UserIntentionSerializer
     permission_classes = [IsAuthenticated]

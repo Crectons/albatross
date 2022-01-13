@@ -48,9 +48,6 @@ class UserInfo(SoftDeleteModel, AbstractBaseUser):
     personal_experience = models.TextField(default='', verbose_name='个人经历')  # 个人经历
     self_evaluate = models.TextField(default='', verbose_name='自我评价')  # 自我评价
 
-    intention = models.ManyToManyField('recruits.PostTree', verbose_name='求职意向', default=None, blank=True,
-                                       related_name='intention')
-
     is_active = models.BooleanField(default=False, verbose_name='是否激活')  # 是否激活
 
     def __str__(self):
@@ -62,3 +59,18 @@ class UserInfo(SoftDeleteModel, AbstractBaseUser):
         verbose_name = '用户信息'
         verbose_name_plural = verbose_name
 
+
+class UserIntention(models.Model):
+    """
+    用户意向
+    """
+    user = models.ForeignKey(to=UserInfo, on_delete=models.CASCADE, verbose_name='用户')
+    post = models.ForeignKey(to='recruits.PostTree', on_delete=models.CASCADE, verbose_name='岗位分类')
+    salary = models.IntegerField(default=0, verbose_name='薪资')
+    city = models.ForeignKey(to=Areas, on_delete=models.CASCADE, verbose_name='城市')
+
+    class Meta:
+        app_label = 'users'
+        db_table = 'tb_user_intention'
+        verbose_name = '用户意向'
+        verbose_name_plural = verbose_name

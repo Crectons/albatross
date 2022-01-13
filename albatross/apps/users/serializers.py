@@ -40,4 +40,4 @@ class UserIntentionSerializer(ModelSerializer):
 
     class Meta:
         model = UserInfo
-        fields = ['uid', 'intention']
+        fields = '__all__'
