@@ -28,21 +28,23 @@ class UserInfo(SoftDeleteModel, AbstractBaseUser):
 
     # 个人基本信息
     name = models.CharField(max_length=16, default='', verbose_name='姓名')  # 姓名
+    birth = models.DateField(null=True, blank=True, verbose_name='生日')  # 生日
     sex = models.SmallIntegerField(choices=GenderChoice.choices, default=GenderChoice.SECRET,
                                    verbose_name='性别')  # 性别
-    birth = models.DateField(null=True, blank=True, verbose_name='生日')  # 生日
-    location = models.CharField(max_length=200, default='', verbose_name='居住地')  # 居住地
+    location = models.ForeignKey(to=Areas, on_delete=models.CASCADE, verbose_name='居住地', blank=True, null=True,
+                                 related_name='location')  # 居住地
     phone = models.CharField(max_length=11, default='', verbose_name='电话')  # 电话
     email = models.CharField(max_length=100, default='', verbose_name='邮箱')  # 邮箱
 
-    work_experience = models.TextField(default='', verbose_name='工作经历')  # 工作经历
+    # 教育经历
     school = models.TextField(default='', verbose_name='学校')  # 学校
+    major = models.CharField(max_length=100, default='', verbose_name='专业')  # 专业
     qualification = models.IntegerField(choices=EducationChoice.choices, default=EducationChoice.UNKNOWN,
                                         verbose_name='学历')
-    major = models.CharField(max_length=100, default='', verbose_name='专业')  # 专业
     is_graduate = models.BooleanField(default=False, verbose_name='应届生')  # 是否为应届生
     edu_details = models.TextField(default='', verbose_name='教育经历详情')  # 教育经历详情
 
+    work_experience = models.TextField(default='', verbose_name='工作经历')  # 工作经历
     skills = models.TextField(default='', verbose_name='技能')  # 技能
     training_experience = models.TextField(default='', verbose_name='培训经历')  # 培训经历
     personal_experience = models.TextField(default='', verbose_name='个人经历')  # 个人经历

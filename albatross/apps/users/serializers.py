@@ -12,6 +12,20 @@ class UserInfoSerializer(ModelSerializer):
     """
     用户信息序列化器（所有信息）
     """
+    location_str = serializers.CharField(source='location', label='城市')
+
+    def validate_location_str(self, value):
+        """
+        城市字符串转换
+        """
+        if value:
+            try:
+                city = Areas.objects.get(name=value.split('-')[-1])
+            except Areas.DoesNotExist:
+                raise serializers.ValidationError(detail='城市不存在', code='city_not_exist')
+            return city
+        return None
+
     class Meta:
         model = UserInfo
         exclude = ['is_deleted', 'last_login', 'openid']
