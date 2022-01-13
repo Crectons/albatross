@@ -1,6 +1,6 @@
 from django.db import models
 
-from albatross.utils.choices import EducationChoice, ClassificationChoice, SalaryTypeChoice
+from albatross.utils.choices import EducationChoice, ClassificationChoice, SalaryTypeChoice, ResumeStatusChoice
 from albatross.utils.models import SoftDeleteModel
 
 
@@ -58,4 +58,32 @@ class PostInfo(SoftDeleteModel):
         app_label = 'recruits'
         db_table = 'tb_post_info'
         verbose_name = '岗位信息'
+        verbose_name_plural = verbose_name
+
+
+class PostResume(models.Model):
+    """
+    投递简历模型
+    """
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey('users.UserInfo', on_delete=models.CASCADE, null=True, blank=True,
+                             related_name='resume', verbose_name='用户')
+    post = models.ForeignKey(PostInfo, on_delete=models.CASCADE, related_name='resume',
+                             null=True, blank=True, verbose_name='岗位')
+    status = models.IntegerField(choices=ResumeStatusChoice.choices, default=ResumeStatusChoice.DELIVER,
+                                 verbose_name='投递简历状态')
+
+    @staticmethod
+    def add(user, post):
+        resume = PostResume(user=user, post=post)
+        resume.save()
+        return resume
+
+    def __str__(self):
+        return f'{self.id}: {self.user}-{self.post}'
+
+    class Meta:
+        app_label = 'recruits'
+        db_table = 'tb_post_resume'
+        verbose_name = '投递简历'
         verbose_name_plural = verbose_name

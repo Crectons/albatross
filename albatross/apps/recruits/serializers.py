@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from .models import PostTree, PostInfo
+from .models import PostTree, PostInfo, PostResume
 from companies.serializers import CompanyInfoDetailSerializer
 
 
@@ -37,7 +37,7 @@ class PostInfoListSerializer(ModelSerializer):
     """
     class Meta:
         model = PostInfo
-        fields = ['pid', 'update_time', 'post_name', 'salary_min', 'salary_max', 'salary_type', 'company', 'requirement',
+        fields = ['pid', 'update_time', 'post_name', 'salary_min', 'company', 'requirement',
                   'node_1', 'node_2', 'node_3', 'location', 'recommend', 'priority']
 
     company = serializers.StringRelatedField(label='公司名称', read_only=True)
@@ -60,3 +60,9 @@ class PostInfoCreateSerializer(ModelSerializer):
     class Meta:
         model = PostInfo
         exclude = ['is_deleted']
+
+
+class PostResumeSerializer(ModelSerializer):
+    class Meta:
+        model = PostResume
+        fields = '__all__'

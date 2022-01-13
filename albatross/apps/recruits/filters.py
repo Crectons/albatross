@@ -30,7 +30,6 @@ class PostInfoFilter(FilterSet):
     node_2 = django_filters.NumberFilter(field_name='node_2', lookup_expr='exact')
     node_3 = django_filters.NumberFilter(field_name='node_3', lookup_expr='exact')
 
-    salary_type = django_filters.NumberFilter(field_name='salary_type', lookup_expr='exact')
     salary_min = django_filters.NumberFilter(field_name='salary_max', lookup_expr='gte')
     salary_max = django_filters.NumberFilter(field_name='salary_min', lookup_expr='lt')
 
@@ -48,6 +47,6 @@ class PostInfoFilter(FilterSet):
         # 指定模型
         models = PostInfo
         # 指定查询的字段
-        fields = ['name', 'pid', 'node_1', 'node_2', 'node_3', 'salary_type', 'salary_min', 'salary_max',
+        fields = ['name', 'pid', 'node_1', 'node_2', 'node_3', 'salary_min', 'salary_max',
                   'location', 'location_min', 'location_max', 'requirement', 'requirement_min', 'requirement_max',
                   'priority']

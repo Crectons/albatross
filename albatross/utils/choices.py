@@ -43,3 +43,15 @@ class SalaryTypeChoice(models.IntegerChoices):
     UNKNOWN = 0, '未知',
     MONTH = 1, '月薪',
     YEAR = 2, '年薪'
+
+
+class ResumeStatusChoice(models.IntegerChoices):
+    """
+    投递简历状态，用于岗位信息
+    """
+    DELIVER = 0, '已投递',
+    WATCH = 1, '已查看',
+    ACCEPT = 2, '已接受',
+    REJECT = 3, '已拒绝'
+
+

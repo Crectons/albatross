@@ -1,5 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
+from rest_framework.exceptions import NotAuthenticated
 from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
@@ -8,8 +9,9 @@ from rest_framework.response import Response
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
 from .filters import PostTreeFilter, PostInfoFilter
-from .models import PostInfo, PostTree
-from .serializers import PostInfoListSerializer, PostInfoDetailSerializer, PostInfoCreateSerializer
+from .models import PostInfo, PostTree, PostResume
+from .serializers import PostInfoListSerializer, PostInfoDetailSerializer, PostInfoCreateSerializer, \
+    PostResumeSerializer
 from .serializers import PostTreeSerializer, PostTreeDetailSerializer
 
 
@@ -35,6 +37,19 @@ class PostInfoViewSet(ModelViewSet):
             return PostInfoDetailSerializer
         return PostInfoCreateSerializer
 
+    @action(methods=['post'], detail=True)
+    def deliver(self, request, pk=None):
+        """
+        投递岗位
+        """
+        post_info = self.get_object()
+        user = request.user
+        if not user.is_authenticated:
+            raise NotAuthenticated('用户未登录')
+
+        resume = PostResume.objects.create(post=post_info, user=user)
+        serializer = PostResumeSerializer(resume)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class PostTreeViewSet(ModelViewSet, CacheResponseMixin):
