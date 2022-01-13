@@ -10,7 +10,7 @@ class UserInfoSerializer(ModelSerializer):
     """
     class Meta:
         model = UserInfo
-        exclude = ['is_deleted', 'last_login', 'openid', 'intention', 'is_active']
+        exclude = ['is_deleted', 'last_login', 'openid']
 
     def validate_avatar(self, value):
         """

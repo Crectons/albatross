@@ -19,7 +19,7 @@ class UserInfoViewSet(RetrieveModelMixin,
                       DestroyModelMixin,
                       GenericViewSet):
     """
-    用户信息视图, 该接口不属于rest风格
+    用户信息视图
     """
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
