@@ -16,6 +16,7 @@ urlpatterns = [
     path('', include('users.urls')),  # 用户信息
     path('recruits/', include('recruits.urls')),  # 招聘信息
     path('companies/', include('companies.urls')),  # 公司信息
+    path('', include('exams.urls')),  # exam
     url(r'^media/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 

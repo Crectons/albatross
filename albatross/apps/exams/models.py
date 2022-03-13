@@ -24,26 +24,12 @@ class QuestionChoice(models.Model):
     """
     question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='问题')
     content = models.TextField(verbose_name='选项内容')
-    is_correct = models.BooleanField(default=False, verbose_name='是否正确')
+    is_correct = models.BooleanField(default=False, verbose_name='是否需要选择')
 
     class Meta:
         app_label = 'exams'
         db_table = 'tb_questions_choices'
         verbose_name = '问题选项'
-        verbose_name_plural = verbose_name
-
-
-class QuestionAnswer(models.Model):
-    """
-    问题答案
-    """
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='问题')
-    content = models.TextField(verbose_name='答案内容')
-
-    class Meta:
-        app_label = 'exams'
-        db_table = 'tb_questions_answers'
-        verbose_name = '问题答案'
         verbose_name_plural = verbose_name
 
 
@@ -53,7 +39,9 @@ class ExamQuestion(models.Model):
     """
     exam = models.ForeignKey('Exam', on_delete=models.CASCADE, verbose_name='试卷')
     question = models.ForeignKey('Question', on_delete=models.CASCADE, verbose_name='问题')
-    score = models.IntegerField(default=0, verbose_name='分数')
+    answer = models.ManyToManyField(QuestionChoice, blank=True, verbose_name='用户答案')
+    score = models.IntegerField(default=0, verbose_name='该题得分')
+    full_score = models.IntegerField(default=0, verbose_name='该题总分')
 
     class Meta:
         app_label = 'exams'
@@ -69,7 +57,14 @@ class Exam(models.Model):
     user = models.ForeignKey('users.UserInfo', on_delete=models.CASCADE, verbose_name='用户')
     name = models.CharField(max_length=100, verbose_name='试卷名称')
     score = models.IntegerField(default=0, verbose_name='总分')
+    total_score = models.IntegerField(default=0, verbose_name='总分')
     submit = models.BooleanField(default=False, verbose_name='是否提交')
 
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
+
+    class Meta:
+        app_label = 'exams'
+        db_table = 'tb_exams'
+        verbose_name = '测验'
+        verbose_name_plural = verbose_name

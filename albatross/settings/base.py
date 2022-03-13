@@ -43,6 +43,8 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'simpleui',  # admin ui（必须在第一行）
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -113,8 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-# LANGUAGE_CODE = 'zh-hans'
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
+# LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -248,3 +250,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
 AVATAR_BASE_WIDTH = 400
 
+# simple ui
+SIMPLEUI_DEFAULT_THEME = 'ant.design.css'
+
+SIMPLEUI_HOME_INFO = False

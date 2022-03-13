@@ -13,3 +13,5 @@ django-filter~=21.1
 pillow~=8.4.0
 django-cors-headers
 mysqlclient
+
+django-simpleui==2022.3.1
