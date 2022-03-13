@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'users',
     'recruits',
     'companies',
-    'areas'
+    'areas',
+    'exams',
 ]
 
 MIDDLEWARE = [
@@ -90,19 +91,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'albatross.wsgi.application'
-
-# local test mysql server
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'albatross',
-        'USER': 'albatross',
-        'PASSWORD': 'albatross',
-        'HOST': '192.168.239.128',
-        # 'HOST': '127.0.0.1',
-        'PORT': '3306',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

@@ -55,3 +55,10 @@ class ResumeStatusChoice(models.IntegerChoices):
     REJECT = 3, '已拒绝'
 
 
+class QuestionTypeChoice(models.IntegerChoices):
+    """
+    问题种类
+    """
+    SINGLE = 0, '单选',
+    MULTIPLE = 1, '多选',
+    JUDGE = 2, '判断',
