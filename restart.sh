@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 uwsgi --reload uwsgi.pid
 service nginx reload
