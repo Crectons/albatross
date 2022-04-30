@@ -122,10 +122,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'albatross',
-        'USER': 'igamango',
+        'USER': 'root',
+#        'USER': 'igamango',
         'PASSWORD': 'Lxn*707771838',
-        'HOST': 'rm-bp16zb0h9kz7v0h67po.mysql.rds.aliyuncs.com',
-        'PORT': '3306',
+#        'HOST': 'rm-bp16zb0h9kz7v0h67po.mysql.rds.aliyuncs.com',
+        'HOST': 'gz-cynosdbmysql-grp-mhigbout.sql.tencentcdb.com',
+#        'PORT': '3306',
+        'PORT': '26246',
         'TEST': {'CHARSET': 'UTF8', },
 #        'OPTIONS': {
 #            'timeout': 20,
